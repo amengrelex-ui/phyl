@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        名称
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="name" type="text" value="{$model['name']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        用户id
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="user_id" type="text" value="{$model['user_id']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        认证费
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="price" type="text" value="{$model['price']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        认证费凭证
+                    </label>
+                    <div class="layui-input-block">
+                        {:opt_photo("certify_image")}
+                    <button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
+                        <i class="fa fa-image">
+                        </i>
+                        上传图片
+                    </button>
+                    <input name="certify_image" type="hidden" value="{$model['certify_image']??""}"/>
+                    <div class="upload-image">
+                        <span>
+                        </span>
+                        <img class="upload-image" src="{$model['certify_image']??""}"/>
+                    </div>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        所得税
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="income_price" type="text" value="{$model['income_price']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        所得税凭证
+                    </label>
+                    <div class="layui-input-block">
+                        {:opt_photo("income_image")}
+                    <button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
+                        <i class="fa fa-image">
+                        </i>
+                        上传图片
+                    </button>
+                    <input name="income_image" type="hidden" value="{$model['income_image']??""}"/>
+                    <div class="upload-image">
+                        <span>
+                        </span>
+                        <img class="upload-image" src="{$model['income_image']??""}"/>
+                    </div>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        办理费
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="handle_price" type="text" value="{$model['handle_price']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        订单编号
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="handle_no" type="text" value="{$model['handle_no']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        卡片名称
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="handle_name" type="text" value="{$model['handle_name']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        领取状态 1:已通过; 0:已申领
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="status" type="text" value="{$model['status']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        申领时间
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="create_time" type="text" value="{$model['create_time']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        交税时间
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="update_time" type="text" value="{$model['update_time']??""}"/>
+                    </div>
+                </div><div class="layui-form-item">
+                    <label class="layui-form-label">
+                        办理时间
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="handle_time" type="text" value="{$model['handle_time']??""}"/>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layedit = layui.layedit
+        layedit.set({
+            uploadImage: {
+                url: "{$Request.root}/index/upload"
+            }
+        });
+        //建立编辑器
+        
+        form.on('submit(save)', function (data) {
+            
+            $.ajax({
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

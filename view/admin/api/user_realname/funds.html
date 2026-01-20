@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+<body>
+<form id="user_recharge" class="layui-form" action="">
+    <div class="site-content">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    用户余额充值-元
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" placeholder="只能为正数" id="user_price" name="user_price" type="text" value=""/>
+                </div>
+            </div>
+            
+            <div class="layui-input-item">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<form id="user_balance" class="layui-form" action="">
+    <div class="site-content">
+        <div class="main-container">
+            <div class="layui-form-item">
+                可提现余额：{$user['price']}；
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    可提现余额冲销-元
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" placeholder="负数时为扣除、正数为增加" id="price" name="price" type="text" value=""/>
+                </div>
+            </div>
+            
+            <div class="layui-input-item">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form id="sign_in_balace" class="layui-form" action="">
+    <div class="site-content">
+        <div class="main-container">
+            <div class="layui-form-item">
+                签到金余额：{$user['sign_in_balace']}；
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    签到金余额冲销-元
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" placeholder="负数时为扣除、正数为增加" id="sign_in" name="sign_in" type="text" value=""/>
+                </div>
+            </div>
+            <div class="layui-input-item">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layedit = layui.layedit
+        let MODULE_PATH = "{$Request.root}/api.user/";
+        layedit.set({
+            uploadImage: {
+                url: "{$Request.root}/index/upload"
+            }
+        });
+        //建立编辑器
+        
+        $('#user_recharge').submit(function (data) {
+            $.ajax({
+                url: MODULE_PATH + 'user_recharge/id/{$id}',
+                data: JSON.stringify({price: $('#user_price').val()}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    console.log(res);
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            
+            $('#user_recharge').unbind('click');
+            return false;
+        });
+        
+        $('#user_balance').submit(function (data) {
+
+            $.ajax({
+                url: MODULE_PATH + 'user_balance/id/{$id}',
+                data: JSON.stringify({price: $('#price').val()}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            $('#user_balance').unbind('click');
+            return false;
+        });
+        
+        $('#sign_in_balace').submit(function (data) {
+            $.ajax({
+                url: MODULE_PATH + 'sign_in_balace/id/{$id}',
+                data: JSON.stringify({sign_in_balace: $("#sign_in").val()}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            $('#sign_in_balace').unbind('click');
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

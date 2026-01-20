@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+	<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<label class="layui-form-label">手机号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="mobile" placeholder="" class="layui-input">
+					</div>
+					<div class="layui-form-item layui-inline">
+						<label class="layui-form-label">数据类型</label>
+						<div class="layui-input-inline">
+							<select name="data_type" lay-verify="requried">
+								<option value="2">充值</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-inline">
+							<select name="status" lay-verify="requried">
+								<option value="">不选择</option>
+								<option value="1">成功</option>
+								<option value="2">拒绝</option>
+								<option value="3">待审核</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item layui-inline">
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+
+		<script type="text/html" id="toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+		        <i class="layui-icon layui-icon-add-1"></i>
+		        新增
+			</button>
+			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        删除
+		    </button>
+            <button class="pear-btn pear-btn-md" lay-event="recycle">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        回收站
+		    </button>
+		</script>
+
+        
+
+		<script type="text/html" id="options">
+			{{# if(d.status == 3){ }}
+				<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="success"><i class="layui-icon layui-icon-ok"></i></button>
+				<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="refuse"><i class="layui-icon layui-icon-close"></i></button>
+			{{# } }}
+		</script>
+		<script type="text/html" id="status">
+			{{# if(d.status == 1){ }}
+			成功
+			{{# }else if(d.status == 2){ }}
+			拒绝
+			{{# }else{ }}
+			待审核
+			{{# } }}
+		</script>
+		<script type="text/html" id="data_type">
+			{{# if(d.data_type == 1){ }}
+			申请提款
+			{{# }else if(d.data_type == 2){ }}
+			充值
+			{{# }else if(d.data_type == 3){ }}
+			扣除
+			{{# }else if(d.data_type == 4){ }}
+			下级返现
+			{{# }else if(d.data_type == 6){ }}
+			后台手动充值
+			{{# }else if(d.data_type == 7){ }}
+			周期脱贫产品本金
+			{{# }else if(d.data_type == 9){ }}
+			一代直推奖励
+			{{# }else if(d.data_type == 10){ }}
+			二代直推奖励
+			{{# }else if(d.data_type == 11){ }}
+			推广奖励
+			{{# }else if(d.data_type == 12){ }}
+			签到扶贫金
+			{{# }else if(d.data_type == 13){ }}
+			高效致富产品收入
+			{{# }else if(d.data_type == 14){ }}
+			高效致富产品本金
+			{{# }else{ }}
+			致富奖励
+			{{# } }}
+			<option value="2">充值</option>
+								<option value="1">申请提款</option>
+								<option value="2">充值</option>
+								<option value="3">扣除</option>
+								<option value="4">周期脱贫产品收益</option>
+								<option value="6">后台手动充值</option>
+								<option value="7">周期脱贫产品本金</option>
+								<option value="9">一代直推奖励</option>
+								<option value="10">二代直推奖励</option>
+								<option value="11">推广奖励</option>
+								<option value="12">签到扶贫金</option>
+								<option value="13">高效致富产品收入</option>
+								<option value="14">高效致富产品本金</option>
+								<option value="15">致富奖励</option>
+		</script>
+        <script>
+        layui.use(['table', 'form', 'jquery','common','laydate'], function() {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.user/user_recharge/";
+
+			let cols = [
+				[{
+					field: "id",
+					title: "ID",
+					unresize: "true",
+					align: "center"
+				}, {
+					field: "data_type",
+					title: "数据类型",
+					unresize: "true",
+					align: "center",
+					templet: '#data_type',
+				}, {
+					field: "withdraw_type",
+					title: "提现类型",
+					unresize: "true",
+					align: "center",
+					templet:function(d){
+					   if(d.data_type != 1){
+					       return '';
+					   } else {
+					       if(d.withdraw_type == 1){
+					           return '周期脱贫产品提现';
+					       } else if(d.withdraw_type == 2){
+					           return '可提余额提现';
+					       } else if(d.withdraw_type == 3){
+					           return '签到扶贫金提现';
+					       } else if(d.withdraw_type == 4){
+					           return '致富奖励提现';
+					       } else if(d.withdraw_type == 5){
+					           return '推广奖励提现';
+					       } else {
+					           return '';
+					       }
+					   }
+					}
+				}, {
+					field: "mobile",
+					title: "用户手机号",
+					unresize: "true",
+					align: "center",
+					templet:function (data) {
+                        return '<a id="barDemo2Btn" class="layui-btn layui-btn-xs" lay-event="cirRoad" >'+data.mobile+'</a>';
+                    }
+				}, {
+					field: "price",
+					title: "金额",
+					unresize: "true",
+					align: "center"
+				}, {
+					field: "status",
+					title: "状态",
+					templet: '#status',
+					unresize: "true",
+					align: "center"
+				}, {
+					field: "reason",
+					title: "拒绝理由",
+					unresize: "true",
+					align: "center"
+				}, {
+					field: "remarks",
+					title: "备注",
+					unresize: "true",
+					align: "center"
+				}, {
+					field: "create_time",
+					title: "创建时间",
+					unresize: "true",
+					align: "center"
+				}, {
+					title: '操作',
+					templet: '#options',
+					unresize: true,
+					align: 'center',
+					width: 180,
+				}
+				]
+			]
+
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + 'index',
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                skin: 'line',
+                // toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function(obj) {
+                if (obj.event === 'refuse') {
+                    window.refuse(obj);
+                } else if (obj.event === 'success') {
+                    window.success(obj);
+                }
+
+                if(obj.event === 'cirRoad'){
+                	location.href='/admin.php/api.user/index?mobile='+obj.data.mobile;
+                }
+            });
+
+            table.on('toolbar(dataTable)', function(obj) {
+                if (obj.event === 'add') {
+                    window.add();
+                } else if (obj.event === 'refresh') {
+                    window.refresh();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                } else if (obj.event === 'recycle') {
+                    window.recycle(obj);
+                }
+            });
+
+            form.on('submit(query)', function(data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page:{curr: 1}
+                })
+                
+                return false;
+            });
+            
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+            window.add = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '新增用户资金明细',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'add'
+                });
+            }
+
+            window.success = function(obj) {
+				$.ajax({
+					dataType: 'json',
+					contentType: 'application/json',
+					type: 'post',
+					url:MODULE_PATH + 'data_success/id/'+obj.data['id'],
+					success: function (res) {
+						//判断有没有权限
+						if (res && res.code == 999) {
+							layer.msg(res.msg, {
+								icon: 5,
+								time: 2000,
+							})
+							return false;
+						} else if (res.code == 200) {
+							layer.msg(res.msg,{icon:1,time:1000});
+						} else {
+							layer.msg(res.msg,{icon:2,time:1000});
+						}
+
+						table.reload('dataTable');
+					}
+				})
+				return false;
+            }
+
+            window.recycle = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '回收站',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'recycle',
+                    cancel: function () {
+                        table.reload('dataTable');
+                    }
+                });
+            }
+
+            window.refreshPage = function(){
+            	table.reload('dataTable');
+            }
+
+            window.refuse = function(obj) {
+            	layer.open({
+            		type: 2,
+                    maxmin: true,
+                    title: '拒绝提现申请',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'refuse/id/'+obj.data['id'],
+	                cancel: function (index) {
+	                    table.reload('dataTable');
+	                }
+            	});
+				// $.ajax({
+				// 	dataType: 'json',
+				// 	contentType: 'application/json',
+				// 	type: 'post',
+				// 	url:MODULE_PATH + 'data_refuse/id/'+obj.data['id'],
+				// 	success: function (res) {
+				// 		//判断有没有权限
+				// 		if (res && res.code == 999) {
+				// 			layer.msg(res.msg, {
+				// 				icon: 5,
+				// 				time: 2000,
+				// 			})
+				// 			return false;
+				// 		} else if (res.code == 200) {
+				// 			layer.msg(res.msg,{icon:1,time:1000});
+				// 		} else {
+				// 			layer.msg(res.msg,{icon:2,time:1000});
+				// 		}
+
+				// 		table.reload('dataTable');
+				// 	}
+				// })
+				return false;
+            }
+
+            window.batchRemove = function(obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dataTable')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些用户资金明细', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'batchRemove',
+                        data:{ids:ids},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if(res && res.code==999){
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000, 
+                                })
+                                return false;
+                            }else if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    table.reload('dataTable');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.refresh = function(param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+	</body>
+</html>

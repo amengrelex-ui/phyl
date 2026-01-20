@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+	<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<label class="layui-form-label">手机号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="mobile" placeholder="" class="layui-input">
+					</div>
+					<label class="layui-form-label">ip</label>
+					<div class="layui-input-inline">
+						<input type="text" name="ip" placeholder="" class="layui-input">
+					</div>
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-inline">
+						<input type="text" name="username" placeholder="" class="layui-input">
+					</div>
+					<div class="layui-form-item layui-inline">
+						<label class="layui-form-label">日期范围</label>
+						<div class="layui-input-inline">
+							<input type="text" id="range" name="range" placeholder="" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-input-inline">
+						<select name="status" id="status">
+						    <option value="-1">不选择</option>
+						    <option value="0">未实名</option>
+						    <option value="1">已实名（正常）</option>
+						    <option value="2">冻结</option>
+						    <option value="3">实名审核中</option>
+						    <option value="4">实名审核不通过</option>
+						</select>
+					</div>
+					
+					<div class="layui-form-item layui-inline">
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+  		
+  		
+        <script>
+        layui.use(['table', 'form', 'jquery','common','laydate'], function() {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.user/";
+            
+            laydate.render({
+                elem: '#range'
+                , range: '~'
+                , eventElem: '.laydate-ico'
+                , trigger: 'click'
+            });
+            
+            let cols = [
+                [ 
+                    {
+                       field: "id",
+                       title: "ID",
+                       unresize: "true",
+                       align: "center",
+                   }, {
+                       field: "mobile",
+                       title: "手机号",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "parent_user_mobile",
+                       title: "父级用户手机号",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "username",
+                       title: "用户真实姓名",
+                       unresize: "true",
+                       align: "center"
+                   }, {
+                       field: "id_card",
+                       title: "用户身份证号码",
+                       unresize: "true",
+                       align: "center"
+                   }, {
+                       field: "price",
+                       title: "余额",
+                       unresize: "true",
+                       align: "center",
+                       width:100,
+                   },{
+                       field: "user_item_level",
+                       title: "会员等级",
+                       unresize: "true",
+                       align: "center"
+                   }, {
+                       field: "login_ip",
+                       title: "登录IP",
+                       unresize: "true",
+                       align: "center",
+                       width:150,
+                   }, {
+                       field: "status_txt",
+                       title: "实名进度",
+                       unresize: "true",
+                       align: "center"
+                   }, {
+                       field: "status_txts",
+                       title: "状态",
+                       unresize: "true",
+                       align: "center",
+                       width:200,
+                   },{
+                       field: "create_time",
+                       title: "创建时间",
+                       unresize: "true",
+                       align: "center"
+                    },{
+                        title: '转账权限',
+                        field: 'transfer_status',
+                        align: 'center',
+                        unresize: true,
+                        templet: '#transfer_status'
+                    }
+                ]
+            ]
+
+            var url = "agent_index";
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + url,
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function(obj) {
+                if (obj.event === 'edit') {
+                    window.edit(obj);
+                }else if (obj.event === 'user_review') {
+					window.user_review(obj);
+				}else if (obj.event === 'user_data') {
+					window.user_data(obj);
+				} else if (obj.event === 'user_balance') {
+					window.user_balance(obj);
+				} else if (obj.event === 'original') {
+					window.original(obj);
+				} else if (obj.event === 'funds') {
+					window.funds(obj);
+				} else if (obj.event === 'user_integral') {
+					window.user_integral(obj);
+				} else if (obj.event === 'grow_up_integral') {
+					window.grow_up_integral(obj);
+				} else if (obj.event === 'edit_password') {
+					window.edit_password(obj);
+				} else if (obj.event === 'fund_detail') {
+					window.fund_detail(obj);
+				} else if (obj.event === 'add') {
+					window.add();
+				} else if(obj.event == 'remove'){
+				    window.remove(obj);
+				}else if(obj.event == 'set_agent'){
+				    window.set_agent(obj);
+				}
+			});
+
+            table.on('toolbar(dataTable)', function(obj) {
+                if (obj.event === 'add') {
+                    window.add();
+                } else if (obj.event === 'refresh') {
+                    window.refresh();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                } else if (obj.event === 'recycle') {
+                    window.recycle(obj);
+                }
+            });
+            
+            form.on('switch(transfer_status)', function(data) {
+                    var transfer_status = data.elem.checked?1:0;
+                    var id = this.value;
+                    var load = layer.load();
+                    $.post('transfer_status',{transfer_status:transfer_status,id:id},function (res) {
+                        layer.close(load);
+                        //判断有没有权限
+                        if(res && res.code==999){
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000, 
+                            })
+                            return false;
+                        }else if (res.code==200){
+                            layer.msg(res.msg,{icon:1,time:1500})
+                        } else {
+                            layer.msg(res.msg,{icon:2,time:1500},function () {
+                                $(data.elem).prop('checked',!$(data.elem).prop('checked'));
+                                form.render()
+                            })
+                        }
+                    })
+                });
+                
+
+            form.on('submit(query)', function(data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page:{curr: 1}
+                })
+                
+                return false;
+            });
+            
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+			window.add = function() {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '新增用户',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'add'
+				});
+			}
+			
+			window.set_agent = function(obj) {
+				$.ajax({
+				    url:MODULE_PATH + 'set_agent',
+                    data:{id:obj.data['id']},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {
+                        if(res.code == 200){
+                            layer.alert('设置成功');
+                        } else {
+                            layer.alert('设置失败');
+                        }
+                    }
+				});
+			}
+			
+// 			window.buy = function(obj){
+// 			    layer.open({
+//                     type: 2,
+//                     maxmin: true,
+//                     title: '购买高效致富产品',
+//                     shade: 0.1,
+//                     area: screen(),
+//                     content: MODULE_PATH + 'buy/id/'+obj.data['id']
+//                 });
+// 			}
+
+            window.user_review = function(obj){
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '认证审核',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'user_review/id/'+obj.data['id']
+                });
+            }
+
+            window.user_data = function(obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: obj.data['mobile']+'的团队',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'user_data/id/'+obj.data['id']
+                });
+            }
+
+			window.fund_detail = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: obj.data['mobile']+'的消费明细',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'fund_detail/id/'+obj.data['id']
+				});
+			}
+
+			window.user_balance = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '余额冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'user_balance/id/'+obj.data['id']
+				});
+			}
+
+			window.original = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '原始金冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'original/id/'+obj.data['id']
+				});
+			}
+			
+			window.funds = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '用户资金操作',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'funds/id/'+obj.data['id']
+				});
+			}
+
+			window.user_integral = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '积分冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'user_integral/id/'+obj.data['id']
+				});
+			}
+
+			window.grow_up_integral = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '成长值冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'grow_up_integral/id/'+obj.data['id']
+				});
+			}
+
+			window.edit_password = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '修改信息',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'edit/id/'+obj.data['id']
+				});
+			}
+
+            window.edit = function(obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '修改用户',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'edit/id/'+obj.data['id']
+                });
+            }
+
+            window.recycle = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '回收站',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'recycle',
+                    cancel: function () {
+                        table.reload('dataTable');
+                    }
+                });
+            }
+
+
+            window.remove = function(obj) {
+                layer.confirm('确定要删除该用户', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'remove',
+                        data:{id:obj.data['id']},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if(res && res.code==999){
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000, 
+                                })
+                                return false;
+                            }else if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.batchRemove = function(obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dataTable')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些用户', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'batchRemove',
+                        data:{ids:ids},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if(res && res.code==999){
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000, 
+                                })
+                                return false;
+                            }else if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    table.reload('dataTable');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.refresh = function(param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+	</body>
+</html>

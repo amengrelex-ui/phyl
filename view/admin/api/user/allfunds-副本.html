@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+    <!--<script src="jquery-3.6.1.min.js"></script>-->
+</head>
+<body>
+<form id="all_funds" class="layui-form" action="">
+    <div class="site-content">
+        <div class="main-container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    发放类型
+                </label>
+                <div class="layui-input-block"> 
+                    <select name="recharge_type" id="recharge_type" lay-verify="requried">
+                        <option value="6">养老金</option>
+                        <option value="7">惠民金</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    用户手机号
+                </label>
+                <div class="layui-input-block">
+                    <textarea name="mobiles" placeholder="用户手机号，一行一个" style="width:100%; height:200px;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    发放金额
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" placeholder="只能为正数" name="price" type="text" value=""/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    备注
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="node" type="text" value=""/>
+                </div>
+            </div>
+            
+            <div class="layui-input-item">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+            </div>
+        </div>
+    </div>
+    
+</form>
+
+
+<script>
+    layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layedit = layui.layedit
+        let MODULE_PATH = "{$Request.root}/api.user/";
+        layedit.set({
+            uploadImage: {
+                url: "{$Request.root}/index/upload"
+            }
+        });
+
+        form.on('submit(save)', function (data) {
+            data.field.recharge_type_txt = $('#recharge_type').find("option:selected").text();
+            $.ajax({
+                url: MODULE_PATH + 'allfunds',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

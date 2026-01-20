@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">产品名称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" placeholder="" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-inline">
+                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                            <i class="layui-icon layui-icon-search"></i>
+                            查询
+                        </button>
+                        <button type="reset" class="pear-btn pear-btn-md">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+
+                    <!--描述-->
+                    <div style="margin-left:37px;">
+                        <p>
+                            页面描述：
+                        </p>
+                        <div style="margin-left:50px;">
+                            <p>
+                                本页面数据列表展示的是平台所有产品记录,后台管理员可以在此页面对产品进行新增、删除、编辑等操作
+                            </p>
+                            <p>
+                                顶部查询功能区,后台管理员可以通过输入产品名称之后点击右侧查询按钮来查询数据,点击重置可以初始化查询条件。
+                            </p>
+
+                        </div>
+                    </div>
+                    <!--描述结束-->
+
+
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+
+    <script type="text/html" id="toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+		        <i class="layui-icon layui-icon-add-1"></i>
+		        新增
+			</button>
+			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        删除
+		    </button>
+<!--            <button class="pear-btn pear-btn-md" lay-event="recycle">-->
+<!--		        <i class="layui-icon layui-icon-delete"></i>-->
+<!--		        回收站-->
+<!--		    </button>-->
+		</script>
+
+
+
+    <script type="text/html" id="options">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit">编辑</i></button>
+		    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete">删除</i></button>
+		</script>
+
+    <script type="text/html" id="product_status">
+		<input type="checkbox" name="product_status" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="product_status" {{# if(d.product_status==1){ }} checked {{# } }}>
+	</script>
+
+    <script type="text/html" id="method_txt">
+        {{# if(d.product_type == 0){ }}
+        -
+        {{# }else{ }}
+        {{d.method_txt}}
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="timeline_type">
+        {{# if(d.timeline_type == 1){ }}
+        <font style="color:#409d17">短期</font>
+        {{# }else if(d.timeline_type == 2){ }}
+        <font style="color:#ef0b4c">长期</font>
+        {{# }else{ }}
+        正常
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="income_type">
+        {{# if(d.timeline_type > 0){ }}
+            {{# if(d.income_type == 1){ }}
+            <font style="color:rgb(202, 151, 12);">周收益</font>
+            {{# }else if(d.income_type == 2){ }}
+            <font style="color:rgb(202, 17, 17);">月收益</font>
+            {{# }else{ }}
+            <font style="color:rgb(12, 202, 107);">日收益</font>
+            
+            {{# } }}
+        {{# }else{ }}
+        --
+        {{# } }}
+    </script>
+    <script>
+        layui.use(['table', 'form', 'jquery', 'common', 'laydate'], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.product/";
+
+            let cols = [
+                [{
+                    type: 'checkbox'
+                }, {
+                    field: "id",
+                    title: "id",
+                    unresize: "true",
+                    align: "center",
+                    width: 50
+                }, {
+                    field: "product_type_convert",
+                    title: "产品类型",
+                    unresize: "true",
+                    align: "center",
+                    width: 100
+                }, {
+                    field: "method_txt",
+                    title: "返本模式",
+                    unresize: "true",
+                    align: "center",
+                    templet: '#method_txt'
+                }, {
+                    field: "name",
+                    title: "产品名称",
+                    unresize: "true",
+                    align: "center",
+                    width: 200
+                }, {
+                    field: "timeline_type",
+                    title: "产品期限",
+                    unresize: "true",
+                    align: "center",
+                    templet: '#timeline_type',
+                    width: 100
+                }, {
+                    field: "income_type",
+                    title: "收益类型",
+                    unresize: "true",
+                    align: "center",
+                    templet: '#income_type',
+                    width: 100
+                }, {
+                    field: "price",
+                    title: "投资金额",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "income",
+                    title: "补助金",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "sort",
+                    title: "排序 降序",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "cycle",
+                    title: "周期",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "proceeds",
+                    title: "收益百分比",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "countdown",
+                    title: "倒计时(天)",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "create_time",
+                    title: "创建时间",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    title: '状态',
+                    field: 'product_status',
+                    align: 'center',
+                    unresize: true,
+                    templet: '#product_status'
+                },
+                {
+                    title: '操作',
+                    toolbar: '#options',
+                    unresize: true,
+                    align: 'center',
+                    width: 180,
+                }
+                ]
+            ]
+
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + 'index',
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function (obj) {
+                if (obj.event === 'remove') {
+                    window.remove(obj);
+                } else if (obj.event === 'edit') {
+                    window.edit(obj);
+                }
+            });
+
+            table.on('toolbar(dataTable)', function (obj) {
+                if (obj.event === 'add') {
+                    window.add();
+                } else if (obj.event === 'refresh') {
+                    window.refresh();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                } else if (obj.event === 'recycle') {
+                    window.recycle(obj);
+                }
+            });
+
+            form.on('switch(product_status)', function (data) {
+                var product_status = data.elem.checked ? 1 : 2;
+                var id = this.value;
+                var load = layer.load();
+                $.post('status', { product_status: product_status, id: id }, function (res) {
+                    layer.close(load);
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg, { icon: 1, time: 1500 })
+                    } else {
+                        layer.msg(res.msg, { icon: 2, time: 1500 }, function () {
+                            $(data.elem).prop('checked', !$(data.elem).prop('checked'));
+                            form.render()
+                        })
+                    }
+                })
+            });
+
+            form.on('submit(query)', function (data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page: { curr: 1 }
+                })
+
+                return false;
+            });
+
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                    width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                    height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+            window.add = function () {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '新增产品管理',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'add'
+                });
+            }
+
+            window.edit = function (obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '修改产品管理',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'edit/id/' + obj.data['id']
+                });
+            }
+
+            window.recycle = function () {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '回收站',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'recycle',
+                    cancel: function () {
+                        table.reload('dataTable');
+                    }
+                });
+            }
+
+
+            window.remove = function (obj) {
+                layer.confirm('确定要删除该产品管理', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + 'remove',
+                        data: { id: obj.data['id'] },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if (res && res.code == 999) {
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000,
+                                })
+                                return false;
+                            } else if (res.code == 200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.batchRemove = function (obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dataTable')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些产品管理', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + 'batchRemove',
+                        data: { ids: ids },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if (res && res.code == 999) {
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000,
+                                })
+                                return false;
+                            } else if (res.code == 200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    table.reload('dataTable');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.refresh = function (param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+</body>
+
+</html>

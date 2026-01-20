@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+    <script src="/static/component/clipboard.min.js"></script>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mobile" placeholder="" class="layui-input">
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="pear-btn pear-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+<!--                    <span id="account_name">[开户名称: 未设置]</span>-->
+<!--                    <span id="account_number">[开户账号: 未设置]</span>-->
+<!--                    <span id="name_of_deposit_bank">[开户行名称: 未设置]</span>-->
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="dataTable" lay-filter="dataTable"></table>
+    </div>
+</div>
+
+<!--		<script type="text/html" id="toolbar">-->
+<!--			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">-->
+<!--		        <i class="layui-icon layui-icon-delete"></i>-->
+<!--		        删除-->
+<!--		    </button>-->
+<!--            <button class="pear-btn pear-btn-md" lay-event="recycle">-->
+<!--		        <i class="layui-icon layui-icon-delete"></i>-->
+<!--		        回收站-->
+<!--		    </button>-->
+<!--//  		</script>-->
+
+
+<script type="text/html" id="toolbar">
+	上级<a href="javascript:;" class="btn" data-clipboard-action="copy" data-clipboard-target="#foo"><span id="foo">{$parent_user.mobile}</span></a>
+</script>
+
+<script>
+    var clipboard = new Clipboard('.btn');
+    layui.use(['table', 'form', 'jquery','common','laydate'], function() {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let common = layui.common;
+        let laydate = layui.laydate;
+        let MODULE_PATH = "{$Request.root}/api.user/";
+
+        let cols = [
+            [ {
+                field: "mobile",
+                title: "手机号",
+                unresize: "true",
+                align: "center",
+                event: "user_data"
+            }, {
+                field: "parent_user_mobile",
+                title: "父级用户手机号",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "integral",
+                title: "用户积分",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "grow_up",
+                title: "成长值",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "username",
+                title: "用户真实姓名",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "id_card",
+                title: "用户身份证号码",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "price",
+                title: "余额",
+                unresize: "true",
+                align: "center"
+            }, {
+                title: '线下人数',
+                field: "subusers",
+                unresize: true,
+                align: 'center',
+            }, {
+                title: '归属',
+                field: "child_level",
+                unresize: true,
+                align: 'center',
+            }, {
+                field: "create_time",
+                title: "创建时间",
+                unresize: "true",
+                align: "center"
+            }, {
+                field: "update_time",
+                title: "更新时间",
+                unresize: "true",
+                align: "center"
+            }
+            ]
+        ]
+
+        table.render({
+            elem: '#dataTable',
+            url: MODULE_PATH + 'user_data/id/'+{$id},
+            page: true,
+            cols: cols,
+            cellMinWidth: 100,
+            skin: 'line',
+            toolbar: '#toolbar',
+            parseData: function(res) { //res即为原始返回的数据
+                // if (res.card && res.card.account_name){
+                //     $('#account_name').text('[开户名称: '+res.card.account_name+']')
+                //     $('#account_number').text('[开户账号: '+res.card.account_number+']')
+                //     $('#name_of_deposit_bank').text('[开户行名称: '+res.card.name_of_deposit_bank+']')
+                // }
+            },
+            defaultToolbar: [{
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+        
+        clipboard.on('success', function(e) {
+            layer.alert('复制成功');
+        });
+
+        table.on('tool(dataTable)', function(obj) {
+            if (obj.event === 'edit') {
+                window.edit(obj);
+            } else if (obj.event === 'user_data') {
+                window.user_data(obj);
+            } else if (obj.event === 'user_balance') {
+                window.user_balance(obj);
+            } else if (obj.event === 'user_integral') {
+                window.user_integral(obj);
+            }else if (obj.event === 'grow_up_integral') {
+                window.grow_up_integral(obj);
+            }else if (obj.event === 'edit_password') {
+                window.edit_password(obj);
+            }
+        });
+
+        table.on('toolbar(dataTable)', function(obj) {
+            if (obj.event === 'add') {
+                window.add();
+            } else if (obj.event === 'refresh') {
+                window.refresh();
+            } else if (obj.event === 'batchRemove') {
+                window.batchRemove(obj);
+            } else if (obj.event === 'recycle') {
+                window.recycle(obj);
+            }
+        });
+
+        form.on('submit(query)', function(data) {
+            table.reload('dataTable', {
+                where: data.field,
+                page:{curr: 1}
+            })
+
+            return false;
+        });
+
+        //弹出窗设置 自己设置弹出百分比
+        function screen() {
+            if (typeof width !== 'number' || width === 0) {
+                width = $(window).width() * 0.8;
+            }
+            if (typeof height !== 'number' || height === 0) {
+                height = $(window).height() - 20;
+            }
+            return [width + 'px', height + 'px'];
+        }
+
+        window.user_data = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '上下级用户',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'user_data/id/'+obj.data['id']
+            });
+        }
+
+        window.user_balance = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '余额冲销',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'user_balance/id/'+obj.data['id']
+            });
+        }
+
+        window.user_integral = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '积分冲销',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'user_integral/id/'+obj.data['id']
+            });
+        }
+
+        window.grow_up_integral = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '成长值冲销',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'grow_up_integral/id/'+obj.data['id']
+            });
+        }
+
+        window.edit_password = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '修改密码',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'edit_password/id/'+obj.data['id']
+            });
+        }
+
+        window.edit = function(obj) {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '修改用户',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'edit/id/'+obj.data['id']
+            });
+        }
+
+        window.recycle = function() {
+            layer.open({
+                type: 2,
+                maxmin: true,
+                title: '回收站',
+                shade: 0.1,
+                area: screen(),
+                content: MODULE_PATH + 'recycle',
+                cancel: function () {
+                    table.reload('dataTable');
+                }
+            });
+        }
+
+
+        window.remove = function(obj) {
+            layer.confirm('确定要删除该用户', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url:MODULE_PATH + 'remove',
+                    data:{id:obj.data['id']},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {
+                        layer.close(loading);
+                        //判断有没有权限
+                        if(res && res.code==999){
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        }else if (res.code==200) {
+                            layer.msg(res.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function() {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(res.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function(obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {
+                    icon: 3,
+                    time: 1000
+                });
+                return false;
+            }
+            var ids = []
+            var hasCheck = table.checkStatus('dataTable')
+            var hasCheckData = hasCheck.data
+            if (hasCheckData.length > 0) {
+                $.each(hasCheckData, function (index, element) {
+                    ids.push(element.id)
+                })
+            }
+            layer.confirm('确定要删除这些用户', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url:MODULE_PATH + 'batchRemove',
+                    data:{ids:ids},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {
+                        layer.close(loading);
+                        //判断有没有权限
+                        if(res && res.code==999){
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        }else if (res.code==200) {
+                            layer.msg(res.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function() {
+                                table.reload('dataTable');
+                            });
+                        } else {
+                            layer.msg(res.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.refresh = function(param) {
+            table.reload('dataTable');
+        }
+    })
+</script>
+</body>
+</html>

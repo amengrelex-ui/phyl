@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>首页三</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+		<link rel="stylesheet" href="/static/admin/css/other/console1.css" />
+		<!-- 主 题 更 换 -->
+		<style id="pearadmin-bg-color"></style>
+	</head>
+	<body class="pear-container">
+		<div>
+			{volist id="vo" name="group_totals"}	
+				<div class="layui-row layui-col-space10">
+					<div class="layui-row" style="text-align: center;font-size:18px;font-weight:bold">{$vo.group}组统计数据</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员增加数量</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.item_user_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yesterday_user_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_user_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员实名数量</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.user_status_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_status_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.total_status_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员激活数量</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.user_active_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_active_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.total_active_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员签到数量</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.user_signin_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_signin_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.total_signin_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">三方充值金额</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.today_recharge_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_recharge_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_recharge_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">手动可用金额</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.item_manual_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yesterday_manual_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_manual_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">手动待提金额</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.today_canwithdraw_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_canwithdraw_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_canwithdraw_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员投资金额</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.item_investment_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yesterday_investment_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_investment_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">每日提现金额</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.item_price_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yesterday_price_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_price_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">惠民养老钱包开通总数</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.user_open_wallet}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.user_yestoday_open_wallet}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.user_open_wallet_total}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">一次性补缴养老保险</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.today_apply_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_apply_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_apply_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-xs6 layui-col-md3">
+						<div class="layui-card top-panel">
+							<div class="layui-card-header">会员账户验证</div>
+							<div class="layui-card-body">
+								<div class="layui-row layui-col-space5">
+									<div class="layui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										今日 {$vo.totals.today_account_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										昨日 {$vo.totals.yestoday_account_count}
+									</div>
+									<div class="llayui-col-xs3 layui-col-md4 top-panel-number" style="color: #28333E;font-size: 16px">
+										总计 {$vo.totals.all_account_count}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/volist}
+			<div class="layui-row layui-col-space12">
+                <div class="layui-col-md9">
+					<div class="layui-card">
+						<div class="layui-card-header">系统信息</div>
+						<div class="layui-card-body">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="50%">
+                                    <col>
+                                </colgroup>
+                                <tbody>
+									<tr>
+									<td>版本号</td>
+									<td>{$ver}</td>
+									</tr>
+                                    <tr>
+                                    <td>操作系统</td>
+                                    <td>{$os}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>剩余空间</td>
+                                    <td>{$space}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>服务器地址</td>
+                                    <td>{$addr}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>运行环境</td>
+                                    <td>{$run}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>PHP版本</td>
+                                    <td>{$php}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>PHP运行方式</td>
+                                    <td>{$php_run}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>MYSQL版本</td>
+                                    <td>{$mysql}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>THINKPHP版本</td>
+                                    <td>{$think}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>上传附件限制</td>
+                                    <td>{$upload}</td>
+                                    </tr>
+                                    <tr>
+                                    <td>执行时间限制</td>
+                                    <td>{$max}</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+						</div>
+					</div>
+				</div>
+<!--                <div class="layui-col-md3">-->
+<!--					<div class="layui-card">-->
+<!--						<div class="layui-card-header"></div>-->
+<!--						<div class="layui-card-body">-->
+<!--							<a target="_blank" href="http://www.pearadmin.com" class="pear-btn pear-btn-success layui-btn-fluid" style="height: 50px;line-height: 50px;">官 网</a>-->
+<!--							<br/>-->
+<!--							<a target="_blank" href="http://www.pearadmin.com/doc/" class="pear-btn pear-btn-primary  layui-btn-fluid" style="margin-top: 8px;height: 50px;line-height: 50px;">文 档</a>-->
+<!--							<br/>-->
+<!--							<a target="_blank" href="https://gitee.com/Jmysy/Pear-Admin-Layui" class="pear-btn pear-btn-warming  layui-btn-fluid" style="margin-top: 8px;height: 50px;line-height: 50px;">下 载</a>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+			</div>
+		</div>
+		<!--</div>-->
+		<script src="/static/component/layui/layui.js"></script>
+		<script src="/static/component/pear/pear.js"></script>
+	</body>
+</html>

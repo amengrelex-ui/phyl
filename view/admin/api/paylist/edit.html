@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body>
+    <form class="layui-form" action="">
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        名称(前端显示)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="name" type="text"
+                            value="{$model['name']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        支付名字
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="payname" type="text"
+                            value="{$model['payname']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        支付方式
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="type" lay-verify="requried">
+                            <option value="0" {if $model.type == 0} selected {/if} >支付宝支付</option>
+                            <option value="1" {if $model.type == 1} selected {/if} >微信支付</option>
+                            <option value="2" {if $model.type == 2} selected {/if} >云闪付支付</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        支付编码(账户姓名)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="code" type="text"
+                            value="{$model['code']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        商户ID(银行卡号)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="mchid" type="text"
+                            value="{$model['mchid']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        应用ID(银行名称)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="appid" type="text"
+                            value="{$model['appid']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        密钥(开户银行)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="appkey" type="text"
+                            value="{$model['appkey']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        充值说明
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="remarks" type="text"
+                            value="{$model['remarks']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        最小金额
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="min" type="text"
+                            value="{$model['min']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        最大金额
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="max" type="text"
+                            value="{$model['max']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        排序
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="sort" type="text"
+                            value="{$model['sort']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        状态
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="status" value="1" title="开启" {if $model.status==1}
+                            checked {/if}>
+                        <input type="radio" name="status" value="0" title="关闭" {if $model.status==0}
+                            checked {/if}>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let layedit = layui.layedit
+            layedit.set({
+                uploadImage: {
+                    url: "{$Request.root}/index/upload"
+                }
+            });
+            //建立编辑器
+
+            form.on('submit(save)', function (data) {
+
+                $.ajax({
+                    data: JSON.stringify(data.field),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    success: function (res) {
+                        //判断有没有权限
+                        if (res && res.code == 999) {
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        } else if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1, time: 1000 }, function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("dataTable");
+                            });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 1000 });
+                        }
+                    }
+                })
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+                        <label class="layui-form-label">
+                            用户手机号
+                        </label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input layui-form-danger" disabled="disabled" name="mobile" value="{$user.mobile}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            提现金额
+                        </label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input layui-form-danger" disabled="disabled" name="price" value="{$list.price}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            备注
+                        </label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input layui-form-danger" disabled="disabled" name="remarks" value="{$list.remarks}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            创建时间
+                        </label>
+                        <div class="layui-input-block">
+                            <input type="text" class="layui-input layui-form-danger" disabled="disabled" name="create_time" value="{$list.create_time}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            拒绝理由
+                        </label>
+                        <div class="layui-input-block">
+                            <textarea name="reason" class="layui-textarea "></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="button-container">
+                            <input type="hidden" name="id" value="{$list.id}">
+                            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                                <i class="layui-icon layui-icon-ok"></i>
+                                提交
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                                <i class="layui-icon layui-icon-refresh"></i>
+                                重置
+                            </button>
+                        </div>
+                    </div>
+				</form>
+			</div>
+		</div>
+        <script>
+        layui.use(['table', 'form', 'jquery','common','laydate'], function() {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            form.on('submit(save)', function (data){
+                $.ajax({
+                    data: JSON.stringify(data.field),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    success: function (res) {
+                        layer.msg(res.msg, {icon: 6, time: 1000}, function () {
+                            //关闭当前frame
+                            var indexFrame = parent.layer.getFrameIndex(window.name);
+                            //刷新父页面
+                            window.parent.refreshPage(data.field.id);
+                            parent.layer.close(indexFrame);
+                        });
+                    }
+                })
+                return false;
+            });
+        })
+    </script>
+	</body>
+</html>

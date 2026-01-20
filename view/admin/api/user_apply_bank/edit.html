@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body>
+    <form class="layui-form" action="">
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        用户手机
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" type="text"
+                            value="{$model['mobile']??""}" readonly />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        银行卡名称
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" type="text"
+                            value="{$model['name']??""}" readonly />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        银行卡图片
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="hidden" value="{$model['bank_image']??""}" />
+                        <div class="upload-image">
+                            <!-- <span></span> -->
+                            <img class="upload-image" src="{$model['bank_image']??""}" style="max-height:unset;max-width:80%" />
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        办理费
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" type="text"
+                            value="{$model['bank_price']??""}" readonly />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        银行卡审核
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="bank_status" value="1" title="未审核" {if $model.bank_status==1}
+                            checked {/if}>
+                        <input type="radio" name="bank_status" value="2" title="已审核" {if $model.bank_status==2}
+                            checked {/if}>
+                        <input type="radio" name="bank_status" value="3" title="已拒绝" {if $model.bank_status==3}
+                        checked {/if}>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        拒绝理由
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="node" type="text"
+                            value="{$model['node']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        交税时间
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" type="text"
+                            value="{$model['create_time']??""}" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let layedit = layui.layedit
+            layedit.set({
+                uploadImage: {
+                    url: "{$Request.root}/index/upload"
+                }
+            });
+            //建立编辑器
+
+            form.on('submit(save)', function (data) {
+
+                $.ajax({
+                    data: JSON.stringify(data.field),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    success: function (res) {
+                        //判断有没有权限
+                        if (res && res.code == 999) {
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        } else if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1, time: 1000 }, function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("dataTable");
+                            });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 1000 });
+                        }
+                    }
+                })
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

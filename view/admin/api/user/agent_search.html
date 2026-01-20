@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+	<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<form class="layui-form" action="">
+				<div class="layui-form-item">
+					<label class="layui-form-label">代理账号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="agent" value="" placeholder="请输入代理账号" class="layui-input">
+					</div>
+					
+					<div class="layui-form-item layui-inline">
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="dataTable" lay-filter="dataTable"></table>
+			</div>
+		</div>
+  		
+  		<script type="text/html" id="options">
+  		{{# if(d.subs > 0) { }}
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="subs" title="查看下级"><i class="layui-icon layui-icon-user">查看下级</i></button>
+		{{# } }}
+		</script>
+        <script>
+        layui.use(['table', 'form', 'jquery','common','laydate'], function() {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.user/";
+            
+            laydate.render({
+                elem: '#range'
+                , range: '~'
+                , eventElem: '.laydate-ico'
+                , trigger: 'click'
+            });
+            
+            let cols = [
+                [ 
+                    {
+                       field: "agent_user",
+                       title: "代理账号",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   },{
+                       field: "id",
+                       title: "ID",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "parent_user",
+                       title: "直属",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   },{
+                       field: "level",
+                       title: "级别",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "mobile",
+                       title: "账号",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   },{
+                       field: "username",
+                       title: "姓名",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "recharge",
+                       title: "充值金额",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                       field: "subs",
+                       title: "下级数量",
+                       unresize: "true",
+                       align: "center",
+                       width:120,
+                   }, {
+                        title: '操作',
+                        toolbar: '#options',
+                        unresize: true,
+                        align: 'center',
+                        width:300,
+                    }
+                ]
+            ]
+
+            var url = "agent_search";
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + url +'?agent={$agent_user}&parent_user_id={$parent_user_id}&level={$level}',
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function(obj) {
+                if (obj.event === 'subs') {
+                    layer.open({
+    					type: 2,
+    					maxmin: true,
+    					title: '查看下级',
+    					shade: 0.1,
+    					area: screen(),
+    					content: MODULE_PATH + 'agent_search?agent='+obj.data.agent_user+'&parent_user_id='+obj.data.id+'&level='+parseInt(obj.data.level)+1
+    				});
+                }
+			});
+            
+            form.on('switch(transfer_status)', function(data) {
+                    var transfer_status = data.elem.checked?1:0;
+                    var id = this.value;
+                    var load = layer.load();
+                    $.post('transfer_status',{transfer_status:transfer_status,id:id},function (res) {
+                        layer.close(load);
+                        //判断有没有权限
+                        if(res && res.code==999){
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000, 
+                            })
+                            return false;
+                        }else if (res.code==200){
+                            layer.msg(res.msg,{icon:1,time:1500})
+                        } else {
+                            layer.msg(res.msg,{icon:2,time:1500},function () {
+                                $(data.elem).prop('checked',!$(data.elem).prop('checked'));
+                                form.render()
+                            })
+                        }
+                    })
+                });
+                
+
+            form.on('submit(query)', function(data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page:{curr: 1}
+                })
+                
+                return false;
+            });
+            
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+			window.add = function() {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '新增用户',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'add'
+				});
+			}
+			
+			window.set_agent = function(obj) {
+				$.ajax({
+				    url:MODULE_PATH + 'set_agent',
+                    data:{id:obj.data['id']},
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(res) {
+                        if(res.code == 200){
+                            layer.alert('设置成功');
+                        } else {
+                            layer.alert('设置失败');
+                        }
+                    }
+				});
+			}
+			
+// 			window.buy = function(obj){
+// 			    layer.open({
+//                     type: 2,
+//                     maxmin: true,
+//                     title: '购买高效致富产品',
+//                     shade: 0.1,
+//                     area: screen(),
+//                     content: MODULE_PATH + 'buy/id/'+obj.data['id']
+//                 });
+// 			}
+
+            window.user_review = function(obj){
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '认证审核',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'user_review/id/'+obj.data['id']
+                });
+            }
+
+            window.user_data = function(obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: obj.data['mobile']+'的团队',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'user_data/id/'+obj.data['id']
+                });
+            }
+
+			window.fund_detail = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: obj.data['mobile']+'的消费明细',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'fund_detail/id/'+obj.data['id']
+				});
+			}
+
+			window.user_balance = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '余额冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'user_balance/id/'+obj.data['id']
+				});
+			}
+
+			window.original = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '原始金冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'original/id/'+obj.data['id']
+				});
+			}
+			
+			window.funds = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '用户资金操作',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'funds/id/'+obj.data['id']
+				});
+			}
+
+			window.user_integral = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '积分冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'user_integral/id/'+obj.data['id']
+				});
+			}
+
+			window.grow_up_integral = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '成长值冲销',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'grow_up_integral/id/'+obj.data['id']
+				});
+			}
+
+			window.edit_password = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '修改信息',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'edit/id/'+obj.data['id']
+				});
+			}
+
+            window.edit = function(obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '修改用户',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'edit/id/'+obj.data['id']
+                });
+            }
+
+            window.recycle = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '回收站',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'recycle',
+                    cancel: function () {
+                        table.reload('dataTable');
+                    }
+                });
+            }
+
+
+            window.remove = function(obj) {
+                layer.confirm('确定要删除该用户', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'remove',
+                        data:{id:obj.data['id']},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if(res && res.code==999){
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000, 
+                                })
+                                return false;
+                            }else if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.batchRemove = function(obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dataTable')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些用户', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'batchRemove',
+                        data:{ids:ids},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if(res && res.code==999){
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000, 
+                                })
+                                return false;
+                            }else if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    table.reload('dataTable');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.refresh = function(param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+	</body>
+</html>

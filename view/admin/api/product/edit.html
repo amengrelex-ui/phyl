@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body>
+    <form class="layui-form" action="">
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        是否新产品
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="is_new" lay-verify="requried">
+                            <option value="0" {if $model.is_new==0} selected {/if}>否</option>
+                            <option value="1" {if $model.is_new==1} selected {/if}>是</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品类型
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="product_type" lay-verify="requried">
+                            <option value="0" {if $model.product_type==0} selected {/if}>兑换券</option>
+                            <option value="1" {if $model.product_type==1} selected {/if}>养老补助</option>
+                            <option value="2" {if $model.product_type==2} selected {/if}>消费补贴</option>
+                            <option value="3" {if $model.product_type==3} selected {/if}>居民保险</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品期限
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="timeline_type" lay-verify="requried">
+                            <option value="0" {if $model.timeline_type==0} selected {/if}>正常</option>
+                            <option value="1" {if $model.timeline_type==1} selected {/if}>短期</option>
+                            <option value="2" {if $model.timeline_type==2} selected {/if}>长期</option>
+                            <option value="3" {if $model.timeline_type==3} selected {/if}>周期</option>
+                            <option value="5" {if $model.timeline_type==5} selected {/if}>周期(抵扣)</option>
+                            <option value="4" {if $model.timeline_type==4} selected {/if}>365日返</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        收益类型
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="income_type" lay-verify="requried">
+                            <option value="0" {if $model.income_type==0} selected {/if}>日收益</option>
+                            <option value="1" {if $model.income_type==1} selected {/if}>周收益</option>
+                            <option value="2" {if $model.income_type==2} selected {/if}>月收益</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        返本模式(理财)
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="method" lay-verify="requried">
+                            <option {if $model.method==1} selected {/if} value="1">每日返利到期还本</option>
+                            <option {if $model.method==2} selected {/if} value="2">到期返利返本</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        资格券
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="voucher_id" lay-verify="requried">
+                            <option value="0" {if $model.voucher_id==0} selected {/if}>无</option>
+                            {volist id="vo" name="vouchers"}
+                                <option {if $model['voucher_id'] == $vo['id']} selected {/if} value="{$vo.id}">{$vo.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        计算类型
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="sum_type" lay-verify="requried">
+                            <option value="0" {if $model.sum_type==0} selected {/if} >无</option>
+                            <option value="1" {if $model.sum_type==1} selected {/if} >产品激活</option>
+                            <option value="2" {if $model.sum_type==2} selected {/if} >手动领取</option>
+                            <option value="3" {if $model.sum_type==3} selected {/if} >账户验证</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品名称
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="name" type="text"
+                            value="{$model['name']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        收益率（%）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="proceeds" type="text"
+                            value="{$model['proceeds']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品倒计时（天）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" id="countdown" class="layui-input layui-form-danger" name="countdown"
+                            type="text" value="{$model['countdown']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        抵扣比例（%）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="deduct_rate" type="text"
+                            value="{$model['deduct_rate']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        周期收益(补助金)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="income" type="text"
+                            value="{$model['income']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        投资金额
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="price" type="text"
+                            value="{$model['price']??""}" />
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        最低投资金额(兑换券额度)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="minimum_investment" type="text"
+                            value="{$model['minimum_investment']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        最高投资金额
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="highest_investment" type="text"
+                            value="{$model['highest_investment']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        赠送养老金
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="set_pension" type="text"
+                            value="{$model['set_pension']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        每人限购（份）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="quota" type="text"
+                            value="{$model['quota']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        每天限购（份）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="daynum" type="text"
+                            value="{$model['daynum']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        周期(天)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="cycle" type="text"
+                            value="{$model['cycle']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        周期(次)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="cycle_num" type="text"
+                            value="{$model['cycle_num']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        进度（%）
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="schedule" type="text"
+                            value="{$model['schedule']??""}" />
+                    </div>
+                </div>
+                <!--
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        基金代号
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="code" type="text"
+                            value="{$model['code']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        基金管理人
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="manager" type="text"
+                            value="{$model['manager']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        基金托管人
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="custodian" type="text"
+                            value="{$model['custodian']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        基金类型(保险结算金额)
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="style" type="text"
+                            value="{$model['style']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        交易币种
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="currency" type="text"
+                            value="{$model['currency']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        运作方式
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="thread_method" type="text"
+                            value="{$model['thread_method']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        开放频率
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="frequency" type="text"
+                            value="{$model['frequency']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        投资目标
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea name="target" style="width:100%; height:40px;">{$model['target']??""}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        签发机关
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="organ" type="text"
+                            value="{$model['organ']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        交易资金安全
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="safety" type="text"
+                            value="{$model['safety']??""}" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        投资范围
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea name="scope" style="width:100%; height:40px;">{$model['scope']??""}</textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        提供方
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="supply" type="text"
+                            value="{$model['supply']??""}" />
+                    </div>
+                </div> -->
+                <!-- <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        兑换券详情图
+                    </label>
+                    <div class="layui-input-block">
+                        {:opt_photo("cover_image")}
+                        <button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
+                            <i class="fa fa-image">
+                            </i>
+                            上传图片
+                        </button>
+                        <input name="cover_image" type="hidden" value="{$model['cover_image']??""}" />
+                        <div class="upload-image">
+                            <span>
+                            </span>
+                            <img class="upload-image" src="{$model['cover_image']??""}" />
+                        </div>
+                    </div>
+                </div> -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品缩略图
+                    </label>
+                    <div class="layui-input-block">
+                        {:opt_photo("image")}
+                        <button class="pear-btn pear-btn-primary pear-btn-sm upload-image" type="button">
+                            <i class="fa fa-image">
+                            </i>
+                            上传图片
+                        </button>
+                        <input name="image" type="hidden" value="{$model['image']??""}" />
+                        <div class="upload-image">
+                            <span>
+                            </span>
+                            <img class="upload-image" src="{$model['image']??""}" />
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        产品概要
+                    </label>
+                    <div class="layui-input-block">
+                        <textarea id="product_content" name="product_content"
+                            style="width:100%; height:40px;">{$model['product_content']??""}</textarea>
+                    </div>
+                </div> -->
+                <!--<div class="layui-form-item">-->
+                <!--    <label class="layui-form-label">-->
+                <!--        结算方式-->
+                <!--    </label>-->
+                <!--    <div class="layui-input-block">-->
+                <!--        <select name="method" lay-verify="requried">-->
+                <!--            <option value="1" {if $model.method == 1} selected {/if} >天</option>-->
+                <!--            <option value="2" {if $model.method == 2} selected {/if} >小时</option>-->
+                <!--            <option value="3" {if $model.method == 3} selected {/if} >分钟</option>-->
+                <!--        </select>-->
+                <!--    </div>-->
+                <!--</div>-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        排序 降序
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input layui-form-danger" name="sort" type="text"
+                            value="{$model['sort']??""}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['form', 'jquery', 'layedit', 'uploads', 'laydate'], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let layedit = layui.layedit;
+            let laydate = layui.laydate;
+            layedit.set({
+                uploadImage: {
+                    url: "{$Request.root}/index/upload"
+                }
+            });
+
+
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#countdown', //指定元素
+                type: 'datetime',
+            });
+
+            //建立编辑器
+            var product_content = layedit.build("product_content", { height: 400 });
+
+            form.on('submit(save)', function (data) {
+                data.field.product_content = layedit.getContent(product_content);
+                console.log(data.field);
+                $.ajax({
+                    data: JSON.stringify(data.field),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    success: function (res) {
+                        //判断有没有权限
+                        if (res && res.code == 999) {
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        } else if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1, time: 1000 }, function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("dataTable");
+                            });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 1000 });
+                        }
+                    }
+                })
+                return false;
+            });
+        })
+    </script>
+</body>
+
+</html>

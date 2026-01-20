@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body class="pear-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <!--描述-->
+                <div>
+                    <p>
+                        页面描述：
+                    </p>
+                    <div style="margin-left:50px;">
+                        <p>
+                            本页面数据列表展示的是平台前端展示信息设置，用户前端提现时相关的设置，用户前端参与签到、余额宝奖励等信息设置，管理员可以直接对设置进行修改。
+                        </p>
+                    </div>
+                </div>
+                <!--描述结束-->
+                <form class="layui-form edit-form" method="post" action="">
+                    <div class="layui-tab layui-tab-brief" lay-filter="TabBrief">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">系统设置</li>
+                            <li>奖励设置</li>
+                            <li>提现设置</li>
+                            <li>兑换设置</li>
+                            <li>APP更新设置</li>
+                            <li>落地页设置</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        登录验证码
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {if $data['login_captcha'] == 1}
+                                        <input type="radio" name="login_captcha" value="1" title="开启" checked>
+                                        <input type="radio" name="login_captcha" value="0" title="关闭">
+                                        {else}
+                                        <input type="radio" name="login_captcha" value="1" title="开启">
+                                        <input type="radio" name="login_captcha" value="0" title="关闭" checked>
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        app下载链接
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="download_url"
+                                            value="{$data['download_url']??""}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        注册链接
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="reg_url"
+                                            value="{$data['reg_url']??""}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        产品客服
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="online_service"
+                                            value="{$data['online_service']??""}" type="text">
+                                    </div>
+                                </div>
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                公司简介
+                            </label>
+                            <div class="layui-input-block">
+                                <textarea id="brief_introduction" name="brief_introduction" type="text/plain" style="width:100%;margin-bottom:20px;">{$data['brief_introduction']??""}</textarea>
+                            </div>
+                        </div> -->
+
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                公司文化
+                            </label>
+                            <div class="layui-input-block">
+                                <textarea id="culture" name="culture" type="text/plain" style="width:100%;margin-bottom:20px;">{$data['culture']??""}</textarea>
+                            </div>
+                        </div> -->
+
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                法律声明
+                            </label>
+                            <div class="layui-input-block">
+                             <textarea id="legal_declaration" name="legal_declaration" type="text/plain" style="width:100%;margin-bottom:20px;">{$data['legal_declaration']??""}</textarea>
+                            </div>
+                        </div> -->
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        首页公告
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <textarea id="notice" name="notice"
+                                            style="width:100%; height:80px;margin-bottom:20px;">{$data['notice']??""}</textarea>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                奖池详情
+                            </label>
+                            <div class="layui-input-block">
+                                <textarea id="prize_detail" name="prize_detail" type="text/plain" style="width:100%; height:80px;margin-bottom:20px;">{$data['prize_detail']??""}</textarea>
+                            </div>
+                        </div> -->
+
+
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        首页弹窗开关
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {if !empty($data['popups_onoff']) && $data['popups_onoff'] == 1}
+                                        <input type="radio" name="popups_onoff" value="1" title="开启" checked>
+                                        <input type="radio" name="popups_onoff" value="0" title="关闭">
+                                        {else}
+                                        <input type="radio" name="popups_onoff" value="1" title="开启">
+                                        <input type="radio" name="popups_onoff" value="0" title="关闭" checked>
+                                        {/if}
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        首页弹窗
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <textarea id="popups_content" name="popups_content" type="text/plain"
+                                            style="width:100%;margin-bottom:20px;">{$data['popups_content']??""}</textarea>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                企业文化图片1
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('corporate_culture_pictures1')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="corporate_culture_pictures1" type="hidden" value="{$data['corporate_culture_pictures1']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['corporate_culture_pictures1']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                企业文化图片2
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('corporate_culture_pictures2')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="corporate_culture_pictures2" type="hidden" value="{$data['corporate_culture_pictures2']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['corporate_culture_pictures2']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                企业文化图片3
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('corporate_culture_pictures3')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="corporate_culture_pictures3" type="hidden" value="{$data['corporate_culture_pictures3']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['corporate_culture_pictures3']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                企业文化图片4
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('corporate_culture_pictures4')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="corporate_culture_pictures4" type="hidden" value="{$data['corporate_culture_pictures4']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['corporate_culture_pictures4']??''}"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                企业文化图片5
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('corporate_culture_pictures5')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="corporate_culture_pictures5" type="hidden" value="{$data['corporate_culture_pictures5']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['corporate_culture_pictures5']??''}"/>
+                                </div>
+                            </div>
+                        </div> -->
+
+                                <!-- <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                团队奖励
+                            </label>
+                            <div class="layui-input-block">
+                                {:opt_photo('team_rewards')}
+                                <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image" type="button">
+                                    <i class="fa fa-image">
+                                    </i>
+                                    上传图片
+                                </button>
+                                <input lay-verify="uploadlogo" name="team_rewards" type="hidden" value="{$data['team_rewards']??''}"/>
+                                <div class="upload-image">
+                                        <span>
+                                        </span>
+                                    <img class="upload-image" src="{$data['team_rewards']??''}"/>
+                                </div>
+                            </div>
+                        </div> -->
+
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        余额宝收益率-%
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="rate"
+                                            value="{$data['rate']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        签到奖励-元
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="sign_in_reward"
+                                            value="{$data['sign_in_reward']??''}" type="number" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        一级推荐奖励-%
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="generation_reward"
+                                            value="{$data['generation_reward']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        二级推荐奖励-%
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="second-generation_rewards"
+                                            value="{$data['second-generation_rewards']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        三级推荐奖励-%
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="third-generation_rewards"
+                                            value="{$data['third-generation_rewards']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        奖池金额-%
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="prize_amount"
+                                            value="{$data['prize_amount']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        注册赠送养老金/元
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="pension_amount"
+                                            value="{$data['pension_amount']??''}" type="text" />
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        兑换券开关
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {if $data['insurance_open'] == 1}
+                                        <input type="radio" name="insurance_open" value="1" title="开启" checked>
+                                        <input type="radio" name="insurance_open" value="0" title="关闭">
+                                        {else}
+                                        <input type="radio" name="insurance_open" value="1" title="开启">
+                                        <input type="radio" name="insurance_open" value="0" title="关闭" checked>
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        惠民金领取
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {if $data['receive_open'] == 1}
+                                        <input type="radio" name="receive_open" value="1" title="开启" checked>
+                                        <input type="radio" name="receive_open" value="0" title="关闭">
+                                        {else}
+                                        <input type="radio" name="receive_open" value="1" title="开启">
+                                        <input type="radio" name="receive_open" value="0" title="关闭" checked>
+                                        {/if}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">最低提现</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="min_withdraw"
+                                            value="{$data['min_withdraw']}">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">周六日不提现</label>
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" {if (!empty($data['widthdraw_except_holidays'])) &&
+                                            ($data['widthdraw_except_holidays']==1)}checked="checked" {/if}
+                                            name="widthdraw_except_holidays" value="1" title="周六日不提现">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">提现时段--上午</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-col-xs5">
+                                            <input autocomplete="off" class="layui-input" name="am_withdraw_start"
+                                                value="{$data['am_withdraw_start']}">
+                                        </div>
+                                        <div class="layui-col-xs1"
+                                            style="height:40px; line-height:40px; text-align:center;">
+                                            --
+                                        </div>
+                                        <div class="layui-col-xs5">
+                                            <input autocomplete="off" class="layui-input" name="am_withdraw_end"
+                                                value="{$data['am_withdraw_end']}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">提现时段--下午</label>
+                                    <div class="layui-input-block">
+                                        <div class="layui-col-xs5">
+                                            <input autocomplete="off" class="layui-input" name="pm_withdraw_start"
+                                                value="{$data['pm_withdraw_start']}">
+                                        </div>
+                                        <div class="layui-col-xs1"
+                                            style="height:40px; line-height:40px; text-align:center;">
+                                            --
+                                        </div>
+                                        <div class="layui-col-xs5">
+                                            <input autocomplete="off" class="layui-input" name="pm_withdraw_end"
+                                                value="{$data['pm_withdraw_end']}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">选择兑换产品</label>
+                                    <div class="layui-input-block">
+                                        <select name="product_set">
+                                            {volist id="vo" name="products"}
+                                            <option {if $data['product_set']==$vo['id']} selected {/if}
+                                                value="{$vo.id}">{$vo.name}</option>
+                                            {/volist}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">补卡金额</label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="sign_amount"
+                                            value="{$data['sign_amount']}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        热更新开关
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {if !empty($data['app_update_open']) && $data['app_update_open'] == 1}
+                                        <input type="radio" name="app_update_open" value="1" title="开启" checked>
+                                        <input type="radio" name="app_update_open" value="0" title="关闭">
+                                        {else}
+                                        <input type="radio" name="app_update_open" value="1" title="开启">
+                                        <input type="radio" name="app_update_open" value="0" title="关闭" checked>
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        热更新版本
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="app_update_version"
+                                            value="{$data['app_update_version']??""}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        热更新提示
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="app_update_text"
+                                            value="{$data['app_update_text']??""}" type="text">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        热更新地址
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input autocomplete="off" class="layui-input" name="app_update_url"
+                                            value="{$data['app_update_url']??""}" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        左侧二维码
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {:opt_photo('luodiye_left_image')}
+                                        <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image"
+                                            type="button">
+                                            <i class="fa fa-image">
+                                            </i>
+                                            上传图片
+                                        </button>
+                                        <input lay-verify="uploadlogo" name="luodiye_left_image" type="hidden"
+                                            value="{$data['luodiye_left_image']??''}" />
+                                        <div class="upload-image">
+                                            <span>
+                                            </span>
+                                            <img class="upload-image"
+                                                src="{$data['luodiye_left_image']??''}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">
+                                        右侧二维码
+                                    </label>
+                                    <div class="layui-input-block">
+                                        {:opt_photo('luodiye_right_image')}
+                                        <button class="pear-btn pear-btn-primary pear-btn-sm  upload-image"
+                                            type="button">
+                                            <i class="fa fa-image">
+                                            </i>
+                                            上传图片
+                                        </button>
+                                        <input lay-verify="uploadlogo" name="luodiye_right_image" type="hidden"
+                                            value="{$data['luodiye_right_image']??''}" />
+                                        <div class="upload-image">
+                                            <span>
+                                            </span>
+                                            <img class="upload-image"
+                                                src="{$data['luodiye_right_image']??''}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            <div class="layui-input-block" style="min-height: 80px;">
+                <button type="submit" class="pear-btn pear-btn-primary">保存</button>
+                <button type="reset" class="pear-btn">重置</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <script>
+        layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let layedit = layui.layedit
+
+            layedit.set({
+                uploadImage: {
+                    url: "{$Request.root}/index/upload"
+                }
+            });
+            var legal_declaration = layedit.build("legal_declaration", { height: 400 });
+            var popups_content = layedit.build("popups_content", { height: 400 });
+            var culture = layedit.build("culture", { height: 400 });
+            var brief_introduction = layedit.build("brief_introduction", { height: 400 });
+            var online_service = layedit.build("online_service", { height: 400 });
+            var recharge_introduction = layedit.build("recharge_introduction", { height: 400 });
+            var introduction_to_withdrawal = layedit.build("introduction_to_withdrawal", { height: 400 });
+            var introduction_to_team_benefits = layedit.build('introduction_to_team_benefits', { height: 400 });
+            var product_prospect = layedit.build('product_prospect', { height: 400 });
+            var get_rich_rewards = layedit.build('get_rich_rewards', { height: 400 });
+            var prize_detail = layedit.build("prize_detail", { height: 400 });
+
+            form.on('radio(type)', function (data) {
+                if (data.value == 1) {
+                    $("#oss").hide();
+                    $("#qiniu").hide();
+                }
+                if (data.value == 2) {
+                    $("#oss").show();
+                    $("#qiniu").hide();
+                }
+                if (data.value == 3) {
+                    $("#qiniu").show();
+                    $("#oss").hide();
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

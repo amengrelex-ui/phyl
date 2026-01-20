@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">数据类型</label>
+                        <div class="layui-input-inline">
+                            <select name="data_type" lay-verify="requried">
+                                <option value="">不选择</option>
+                                <option value="1">申请提款</option>
+                                <option value="2">充值</option>
+                                <option value="3">扣除</option>
+                                <option value="4">周期脱贫产品收益</option>
+                                <option value="5">抽奖返现</option>
+                                <option value="6">后台充值</option>
+                                <option value="7">周期脱贫产品本金</option>
+                                <option value="8">注册原始金</option>
+                                <option value="9">一代直推奖励</option>
+                                <option value="10">二代直推奖励</option>
+                                <option value="11">推广奖励</option>
+                                <option value="12">签到扶贫金</option>
+                                <option value="13">高效致富产品收益</option>
+                                <option value="14">高效致富产品本金</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-inline">
+                            <select name="status" lay-verify="requried">
+                                <option value="">不选择</option>
+                                <option value="1">成功</option>
+                                <option value="2">拒绝</option>
+                                <option value="3">待审核</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-inline">
+                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                            <i class="layui-icon layui-icon-search"></i>
+                            查询
+                        </button>
+                        <button type="reset" class="pear-btn pear-btn-md">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+
+    <script type="text/html" id="toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </button>
+    <button class="pear-btn pear-btn-md" lay-event="recycle">
+        <i class="layui-icon layui-icon-delete"></i>
+        回收站
+    </button>
+</script>
+
+
+
+    <script type="text/html" id="options">
+    {{# if(d.status == 3){ }}
+    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="success"><i class="layui-icon layui-icon-ok"></i></button>
+    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="refuse"><i class="layui-icon layui-icon-close"></i></button>
+    {{# } }}
+</script>
+    <script type="text/html" id="status">
+    {{# if(d.status == 1){ }}
+    成功
+    {{# }else if(d.status == 2){ }}
+    拒绝
+    {{# }else{ }}
+    待审核
+    {{# } }}
+</script>
+    <script type="text/html" id="data_type">
+    {{# if(d.data_type == 1){ }}
+    申请提款
+    {{# }else if(d.data_type == 2){ }}
+    充值
+    {{# }else if(d.data_type == 3){ }}
+    扣除
+    {{# }else if(d.data_type == 4){ }}
+    转账支出
+    {{# }else if(d.data_type == 5){ }}
+    转账收入
+    {{# }else if(d.data_type == 7){ }}
+    系统扣款
+    {{# }else if(d.data_type == 8){ }}
+    一代直推奖励
+    {{# }else if(d.data_type == 9){ }}
+    二代直推奖励
+    {{# }else if(d.data_type == 10){ }}
+    三代直推奖励
+    {{# }else if(d.data_type == 11){ }}
+    签到
+    {{# }else if(d.data_type == 12){ }}
+    余额宝转入
+    {{# }else if(d.data_type == 13){ }}
+    余额宝转出
+    {{# }else if(d.data_type == 14){ }}
+    爱心捐赠
+    {{# }else if(d.data_type == 15){ }}
+    积分兑换
+    {{# }else if(d.data_type == 16){ }}
+    产品收益
+    {{# }else if(d.data_type == 17){ }}
+    本金返还
+    {{# }else if(d.data_type == 18){ }}
+    每月任务奖励
+    {{# }else if(d.data_type == 19){ }}
+    补卡
+    {{# }else if(d.data_type == 20){ }}
+    养老金
+    {{# }else if(d.data_type == 21){ }}
+    可提余额
+    {{# }else if(d.data_type == 22){ }}
+    司法认证费
+    {{# }else if(d.data_type == 23){ }}
+    个人所得税
+    {{# }else if(d.data_type == 24){ }}
+    办理联名卡
+    {{# }else if(d.data_type == 25){ }}
+    惠民金
+    {{# } }}
+</script>
+    <script>
+        layui.use(['table', 'form', 'jquery', 'common', 'laydate'], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.user/";
+            let MODULE_PATH2 = "{$Request.root}/api.fund_detail/";
+
+            let cols = [
+                [{
+                    field: "id",
+                    title: "ID",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "data_type",
+                    title: "数据类型",
+                    unresize: "true",
+                    align: "center",
+                    templet: '#data_type',
+                }, {
+                    field: "mobile",
+                    title: "用户手机号",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "price",
+                    title: "金额",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "status",
+                    title: "状态",
+                    templet: '#status',
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "remarks",
+                    title: "备注",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "node",
+                    title: "说明",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "create_time",
+                    title: "创建时间",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    title: '操作',
+                    templet: '#options',
+                    unresize: true,
+                    align: 'center',
+                    width: 180,
+                }
+                ]
+            ]
+
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + 'fund_detail?id={$id}',
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                limits:[100,200,300,400,500],
+                limit:100,
+                skin: 'line',
+                // toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function (obj) {
+                if (obj.event === 'refuse') {
+                    window.refuse(obj);
+                } else if (obj.event === 'success') {
+                    window.success(obj);
+                }
+            });
+
+            table.on('toolbar(dataTable)', function (obj) {
+                if (obj.event === 'add') {
+                    window.add();
+                } else if (obj.event === 'refresh') {
+                    window.refresh();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                } else if (obj.event === 'recycle') {
+                    window.recycle(obj);
+                }
+            });
+
+            form.on('submit(query)', function (data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page: { curr: 1 }
+                })
+
+                return false;
+            });
+
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                    width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                    height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+            window.success = function (obj) {
+                $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    url: MODULE_PATH2 + 'data_success/id/' + obj.data['id'],
+                    success: function (res) {
+                        //判断有没有权限
+                        if (res && res.code == 999) {
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        } else if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1, time: 1000 });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 1000 });
+                        }
+
+                        table.reload('dataTable');
+                    }
+                })
+                return false;
+            }
+
+
+            window.refuse = function (obj) {
+                $.ajax({
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'post',
+                    url: MODULE_PATH2 + 'data_refuse/id/' + obj.data['id'],
+                    success: function (res) {
+                        //判断有没有权限
+                        if (res && res.code == 999) {
+                            layer.msg(res.msg, {
+                                icon: 5,
+                                time: 2000,
+                            })
+                            return false;
+                        } else if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1, time: 1000 });
+                        } else {
+                            layer.msg(res.msg, { icon: 2, time: 1000 });
+                        }
+
+                        table.reload('dataTable');
+                    }
+                })
+                return false;
+            }
+
+            window.refresh = function (param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+</body>
+
+</html>

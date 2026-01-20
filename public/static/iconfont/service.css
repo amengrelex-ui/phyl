@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "service"; /* Project id  */
+  src: url('service.ttf?t=1629948647183') format('truetype');
+}
+
+.service {
+  font-family: "service" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-kefu:before {
+  content: "\e60b";
+}
+

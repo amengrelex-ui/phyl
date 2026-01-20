@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css"/>
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            {if $user['level'] == 4}
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    注册并完成实名50名
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="offline_auths" value="{$list['offline_auths']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['offline_auths']/50*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    充值并购买产品人数到达20人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="recharge_buys" value="{$list['recharge_buys']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['recharge_buys']/20*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    一级会员充值10人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub1_recharge" value="{$list['sub1_recharge']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub1_recharge']/10*100, 2){/php}%</div>
+            </div>
+            {elseif $user['level'] == 3 /}
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    注册并完成实名100名
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="offline_auths" value="{$list['offline_auths']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['offline_auths']/100*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    一级直推会员完成激活50人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub1_buy" value="{$list['sub1_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub1_buy']/50*100, 2){/php}%</div>
+            </div>
+            {elseif $user['level'] == 2 /}
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    注册并完成实名200名
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="offline_auths" value="{$list['offline_auths']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['offline_auths']/200*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    一级直推会员完成激活80人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub1_buy" value="{$list['sub1_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub1_buy']/80*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    该月团队业绩达到100万
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="group_buy" value="{$list['group_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['group_buy']/100*100, 2){/php}%</div>
+            </div>
+            {else /}
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    注册并完成实名200名
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="offline_auths" value="{$list['offline_auths']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['offline_auths']/200*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    一级直推会员完成激活50人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub1_buy" value="{$list['sub1_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub1_buy']/50*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    二级会员完成激活30人
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub2_buy" value="{$list['sub2_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub2_buy']/30*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    一级会员10人完成购买太阳能光伏发电
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="sub1_special" value="{$list['sub1_special']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['sub1_special']/10*100, 2){/php}%</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    该月团队业绩达到200万
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input layui-form-danger" name="group_buy" value="{$list['group_buy']}"/>
+                </div>
+                <div class="layui-form-mid layui-word-aux">进度：{php}echo round($list['group_buy']/2000000*100, 2){/php}%</div>
+            </div>
+            {/if}
+            <input type="hidden" name="user_id" value="{$user['id']}"/>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="" lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form', 'jquery', 'layedit', 'uploads'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let layedit = layui.layedit
+        
+        //建立编辑器
+
+        form.on('submit(save)', function (data) {
+            $.ajax({
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (res) {
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg,{icon:1,time:1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("dataTable");
+                        });
+                    } else {
+                        layer.msg(res.msg,{icon:2,time:1000});
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

