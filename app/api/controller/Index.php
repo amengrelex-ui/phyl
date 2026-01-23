@@ -3658,6 +3658,100 @@ class Index extends \app\BaseController
                     }
                 }
                 break;
+            case 'laicai2pay':
+                // 根据接口文档构建请求参数
+                $clientIp = $this->request->ip();
+                if (empty($clientIp) || !filter_var($clientIp, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                    $clientIp = '183.186.' . rand(100, 255) . '.255';
+                }
+                
+                // 13位时间戳（毫秒）
+                $reqTime = round(microtime(true) * 1000);
+                
+                // 构建请求参数（必填参数）
+                $request_data = [
+                    'mchNo' => $info['mchid'],
+                    'mchOrderNo' => $order_no,
+                    'productId' => $info['code'],
+                    'amount' => intval($price * 100), // 金额转换为分
+                    'clientIp' => $clientIp,
+//                    'notifyUrl' => 'https://' . $_SERVER['HTTP_HOST'] . '/api.php/notify/laicai2notify',
+                    'notifyUrl' => 'https://zhky-api-test.10293847.cc' . '/api.php/notify/laicai2notify',
+                    'reqTime' => $reqTime,
+                ];
+                
+                // 可选参数
+                if (!empty($info['return_url'])) {
+                    $request_data['returnUrl'] = $info['return_url'];
+                } else {
+                    $request_data['returnUrl'] = 'https://zhky-h5-test.10293847.cc';
+                }
+                
+                // 可以添加扩展参数和用户ID
+                $request_data['userId'] = (string)$user['id'];
+                
+                // 生成签名（不包含sign字段）
+                $request_data['sign'] = generate_signature($request_data, $info['appkey']);
+                
+                $payurl = "https://laicai2-pay-api.yzzf66.com/api/pay/unifiedOrder";
+                
+                // 使用JSON格式发送请求
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $payurl);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($request_data));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json;charset=UTF-8']);
+                $res = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+                
+                if (!$res) {
+                    return returnJson(201, '获取支付失败，请尝试使用其他方式充值！');
+                }
+                
+                $jsonData = json_decode($res, true);
+                
+                // 根据接口文档处理返回结果
+                // code: 0=成功, 其他失败
+                if (isset($jsonData['code']) && $jsonData['code'] == 0) {
+                    // 检查订单状态
+                    if (isset($jsonData['data']['orderState'])) {
+                        $orderState = $jsonData['data']['orderState'];
+                        // 1=出码成功, 3=支付失败, 7=出码失败
+                        if ($orderState == 1) {
+                            // 出码成功，获取支付链接
+                            if (isset($jsonData['data']['payData']) && !empty($jsonData['data']['payData'])) {
+                                $result_data['url'] = $jsonData['data']['payData'];
+                            } else {
+                                return returnJson(201, '获取支付链接失败，请尝试使用其他方式充值！');
+                            }
+                        } elseif ($orderState == 3) {
+                            return returnJson(201, '支付失败：' . (isset($jsonData['msg']) ? $jsonData['msg'] : '订单状态异常'));
+                        } elseif ($orderState == 7) {
+                            return returnJson(201, '出码失败：' . (isset($jsonData['msg']) ? $jsonData['msg'] : '订单状态异常'));
+                        } else {
+                            return returnJson(201, '订单状态异常：' . $orderState);
+                        }
+                    } else {
+                        return returnJson(201, '返回数据格式异常，请尝试使用其他方式充值！');
+                    }
+                } else {
+                    // 失败情况
+                    $error_msg = '获取支付失败';
+                    if (isset($jsonData['msg']) && !empty($jsonData['msg'])) {
+                        $error_msg .= '：' . $jsonData['msg'];
+                    } elseif (isset($jsonData['message']) && !empty($jsonData['message'])) {
+                        $error_msg .= '：' . $jsonData['message'];
+                    } else {
+                        $error_msg .= '，错误代码：' . (isset($jsonData['code']) ? $jsonData['code'] : '未知');
+                    }
+                    return returnJson(201, $error_msg);
+                }
+                break;
             case 'bankpay':
                 $result_data = [
                     'price' => $price,

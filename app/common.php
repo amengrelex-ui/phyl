@@ -218,6 +218,35 @@ if (!function_exists('get_sign_md5_key')) {
     }
 }
 
+if (!function_exists('generate_signature')) {
+    /**
+     * 生成签名（laicai2支付专用）
+     * @param array $params 参数数组
+     * @param string $secretKey 密钥
+     * @return string 签名值（大写MD5）
+     */
+    function generate_signature($params, $secretKey)
+    {
+        // 过滤空值参数
+        $filteredParams = array_filter($params, function($value) {
+            return $value !== null && $value !== '';
+        });
+
+        // 按key排序
+        ksort($filteredParams);
+
+        // 拼接为 key=value&key2=value2 格式，不进行 urlencode
+        $pairs = [];
+        foreach ($filteredParams as $key => $value) {
+            $pairs[] = $key . '=' . $value;
+        }
+        $stringToSign = implode('&', $pairs) . '&key=' . $secretKey;
+
+        // MD5加密并转大写
+        return strtoupper(md5($stringToSign));
+    }
+}
+
 if (!function_exists('is_url')) {
     //是否
     function is_url($url)
